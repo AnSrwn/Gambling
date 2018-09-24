@@ -1,9 +1,10 @@
-package com.example.user.gambling
+package com.example.user.gambling.game
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.user.gambling.R
 
 class DiceMenuFragment : android.support.v4.app.Fragment() {
 
