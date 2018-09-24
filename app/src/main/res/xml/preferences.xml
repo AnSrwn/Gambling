@@ -3,12 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <PreferenceCategory
-        android:key="backgroundColor"
+        android:key="pref_color"
         android:title="@string/pref_bc">
 
         <ListPreference
             android:defaultValue="@string/pref_bc_def"
-            android:key="pref_user_key"
+            android:key="pref_bc_key"
             android:entries="@array/pref_bc_entries"
             android:entryValues="@array/pref_bc_values"
             android:title="@string/pref_bc_text" />

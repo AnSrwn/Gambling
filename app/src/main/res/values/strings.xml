@@ -16,5 +16,6 @@
     <!-- Preference -->
     <string name="pref_bc">Colors</string>
     <string name="pref_bc_def">white</string>
+    <string name="pref_bc_key">backGroundColorList</string>
     <string name="pref_bc_text">Background Color</string>
 </resources>
