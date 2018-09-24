@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/settings"
+        android:icon="@drawable/ic_baseline_settings_20px"
+        android:title="@string/opt_pref"/>
+    <item android:id="@+id/help"
+        android:icon="@drawable/ic_baseline_help_24px"
+        android:title="@string/opt_help" />
+</menu>

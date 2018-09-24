@@ -1,6 +1,20 @@
 <resources>
+    <!-- btn = Button
+         opt = Options Menu
+         pref = Preferences
+         -->
+
     <string name="app_name">Gambling</string>
 
     <string name="roll_the_dice">Roll the dice!</string>
     <string name="multiplayer">Multiplayer</string>
+
+    <!-- Options Menu -->
+    <string name="opt_pref">Settings</string>
+    <string name="opt_help">Help</string>
+
+    <!-- Preference -->
+    <string name="pref_bc">Colors</string>
+    <string name="pref_bc_def">white</string>
+    <string name="pref_bc_text">Background Color</string>
 </resources>
