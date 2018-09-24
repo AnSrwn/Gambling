@@ -1,6 +1,5 @@
 package com.example.user.gambling.game
 
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
