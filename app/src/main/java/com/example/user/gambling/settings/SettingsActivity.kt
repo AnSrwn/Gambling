@@ -9,6 +9,7 @@ class SettingsActivity : AppCompatActivity(){
     private val settingsFragment = SettingsFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.BetterOne)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 

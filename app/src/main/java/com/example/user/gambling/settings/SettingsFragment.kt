@@ -10,18 +10,25 @@ import com.example.user.gambling.R
 
 class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener{
 
+
     override fun onCreatePreferences(p0: Bundle?, p1: String?) {
         addPreferencesFromResource(R.xml.preferences)
-        val exercisesPref: Preference = findPreference("pref_bc_key")
-        exercisesPref.summary = PreferenceManager.getDefaultSharedPreferences(activity)?.getString("pref_bc_key", "")
+        setSettingInformation()
         preferenceManager.sharedPreferences.registerOnSharedPreferenceChangeListener(this) // register listener
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         Log.d("DBG", "Preference Changed")
+        setSettingInformation()
+    }
 
-        // Set summary to be the user-description for the selected value
-        val exercisesPref: Preference = findPreference(key)
-        exercisesPref.summary = sharedPreferences?.getString(key, "")
+    private fun setSettingInformation(){
+        val prefs : Map<String, *> = PreferenceManager.getDefaultSharedPreferences(activity).all
+        val mapIterator = prefs.iterator()
+        while(mapIterator.hasNext()){
+            val nextKey = mapIterator.next().key
+            val pref : Preference = findPreference(nextKey)
+            pref.summary = PreferenceManager.getDefaultSharedPreferences(activity)?.getString(nextKey, "")
+        }
     }
 }

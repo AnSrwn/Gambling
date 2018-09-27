@@ -14,8 +14,15 @@
     <string name="opt_help">Help</string>
 
     <!-- Preference -->
-    <string name="pref_bc">Colors</string>
+    <string name="pref_appearance">Appearance</string>
+
+    <!-- Background Color -->
     <string name="pref_bc_def">white</string>
     <string name="pref_bc_key">backGroundColorList</string>
     <string name="pref_bc_text">Background Color</string>
+
+    <!-- Theme -->
+    <string name="pref_theme_def">light</string>
+    <string name="pref_theme_key">themeList</string>
+    <string name="pref_theme_text">Theme</string>
 </resources>

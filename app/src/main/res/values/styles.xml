@@ -8,4 +8,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="BetterOne" parent="Theme.AppCompat.Light.NoActionBar" >
+    </style>
+
+    <style name="Light" parent="Theme.AppCompat.Light.DarkActionBar" />
+
+    <style name="Dark" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
 </resources>

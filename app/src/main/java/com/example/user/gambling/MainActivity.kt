@@ -9,6 +9,7 @@ import android.view.Menu
 import com.example.user.gambling.game.DiceMenuFragment
 import android.view.MenuItem
 import com.example.user.gambling.settings.SettingsActivity
+import com.example.user.gambling.utility.Utils
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -18,8 +19,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Utils.onActivityCreateSetTheme(this)
         setContentView(R.layout.activity_main)
-        loadPreferences()
 
         supportFragmentManager.beginTransaction().add(R.id.fragmentContainer, diceMenuFragment).commit()
     }
@@ -45,14 +46,23 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        loadPreferences()
+    override fun onRestart() {
+        super.onRestart()
+        //loadPreferences()
+        reloadTheme()
+
     }
 
     private fun loadPreferences(){
         val sp = PreferenceManager.getDefaultSharedPreferences(this)
         val color = sp.getString("pref_bc_key", "white")
         fragmentContainer.setBackgroundColor(Color.parseColor(color))
+        //TODO Some other preferences stuff
+    }
+
+    private fun reloadTheme(){
+        val sp = PreferenceManager.getDefaultSharedPreferences(this)
+        val theme = sp.getString("pref_theme_key", Utils.THEME_LIGHT)
+        Utils.changeToTheme(this, theme)
     }
 }
