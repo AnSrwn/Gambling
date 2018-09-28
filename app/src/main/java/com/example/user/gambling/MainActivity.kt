@@ -48,9 +48,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onRestart() {
         super.onRestart()
-        //loadPreferences()
         reloadTheme()
+    }
 
+    override fun onStart() {
+        super.onStart()
+        loadPreferences()
     }
 
     private fun loadPreferences(){
