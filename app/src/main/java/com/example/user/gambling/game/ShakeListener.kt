@@ -8,7 +8,7 @@ import android.hardware.SensorManager
 
 class ShakeListener(context: Context) : SensorEventListener {
 
-    private val shakeThreshold = 500 //defines how strong the shake must be, to be detected
+    private val shakeThreshold = 800 //defines how strong the shake must be, to be detected
 
     private var sensorManager: SensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
     private var shakeListener: OnShakeListener? = null
@@ -18,10 +18,12 @@ class ShakeListener(context: Context) : SensorEventListener {
     private var lastY = -1.0f
     private var lastZ = -1.0f
     private var lastUpdate = 0L
+    private var lastShake = 0L
 
 
     interface OnShakeListener {
         fun onShake()
+        fun onShakeStop()
     }
 
     fun setOnShakeListener(listener: OnShakeListener) {
@@ -62,6 +64,9 @@ class ShakeListener(context: Context) : SensorEventListener {
 
                     if (speed > shakeThreshold) {
                         shakeListener?.onShake()
+                        lastShake = curTime
+                    } else if (curTime - lastShake > 400) {
+                        shakeListener?.onShakeStop()
                     }
 
                     lastX = x

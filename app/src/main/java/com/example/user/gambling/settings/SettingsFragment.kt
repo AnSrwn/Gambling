@@ -13,13 +13,13 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
 
     override fun onCreatePreferences(p0: Bundle?, p1: String?) {
         addPreferencesFromResource(R.xml.preferences)
-        setSettingInformation()
+        //setSettingInformation()
         preferenceManager.sharedPreferences.registerOnSharedPreferenceChangeListener(this) // register listener
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         Log.d("DBG", "Preference Changed")
-        setSettingInformation()
+        //setSettingInformation()
     }
 
     private fun setSettingInformation(){
