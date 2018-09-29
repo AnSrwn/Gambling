@@ -1,6 +1,9 @@
 package com.example.user.gambling.database.entities
 
-@Entity
-data class Score{
+import android.arch.persistence.room.Entity
 
-}
+/*
+@Entity
+data class Score {
+
+} */

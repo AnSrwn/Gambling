@@ -31,6 +31,7 @@
 
     <!-- DiceSingleplayer -->
     <string name="dice_single_imageView_description">Result of the dice shake</string>
+    <string name="dice_single_score">Score: %1$d</string>
 
 
 </resources>
