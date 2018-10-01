@@ -24,6 +24,7 @@ class ShakeListener(context: Context) : SensorEventListener {
     interface OnShakeListener {
         fun onShake()
         fun onShakeStop()
+        fun onResume()
     }
 
     fun setOnShakeListener(listener: OnShakeListener) {
@@ -36,6 +37,7 @@ class ShakeListener(context: Context) : SensorEventListener {
             sensorManager.unregisterListener(this, sensor)
             throw UnsupportedOperationException("Accelerometer not supported")
         }
+        shakeListener?.onResume()
     }
 
     fun pause() {
