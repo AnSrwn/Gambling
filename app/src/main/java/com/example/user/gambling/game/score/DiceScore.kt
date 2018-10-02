@@ -1,4 +1,4 @@
-package com.example.user.gambling.game
+package com.example.user.gambling.game.score
 
 import java.util.*
 

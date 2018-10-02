@@ -11,6 +11,7 @@
     <!-- DiceMenu -->
     <string name="dice_menu_roll_the_dice">Roll the dice!</string>
     <string name="dice_menu_multiplayer">Multiplayer</string>
+    <string name="dice_menu_show_score">Show Score</string>
 
     <!-- Options Menu -->
     <string name="opt_pref">Settings</string>

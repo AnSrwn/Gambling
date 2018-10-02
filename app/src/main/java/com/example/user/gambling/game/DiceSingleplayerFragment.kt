@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.example.user.gambling.R
+import com.example.user.gambling.game.score.DiceScore
 import kotlinx.android.synthetic.main.fragment_dice_singleplayer.*
 import pl.droidsonroids.gif.GifDrawable
 import pl.droidsonroids.gif.GifImageView
