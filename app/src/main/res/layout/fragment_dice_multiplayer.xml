@@ -1,38 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".game.DiceMultiplayerFragment">
 
-    <TextView
-        android:id="@+id/textViewConnStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
-
     <Button
         android:id="@+id/buttonConnFindOpponent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/dice_multi_find_opponent"/>
+        android:layout_marginStart="139dp"
+        android:layout_marginTop="296dp"
+        android:layout_marginEnd="139dp"
+        android:text="@string/dice_multi_find_opponent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textViewScore"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <EditText
-        android:id="@+id/editTextSetOwnScore"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <Button
-        android:id="@+id/buttonSendScore"
-        android:layout_width="match_parent"
+        android:id="@+id/textViewConnStatus"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/dice_multi_send_score" />
+        android:layout_gravity="center"
+        android:layout_marginStart="192dp"
+        android:layout_marginTop="371dp"
+        android:layout_marginEnd="191dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

@@ -22,9 +22,12 @@ class DiceMenuFragment : android.support.v4.app.Fragment() {
                               savedInstanceState: Bundle?): View? {
 
         val view = inflater.inflate(R.layout.fragment_dice_menu, container, false)
-        val buttonStartSingleplayerFragment = view.findViewById(R.id.buttonStartSingleplayerFragment) as Button
-        val buttonStartMultiplayerFragment = view.findViewById(R.id.buttonStartMultiplayerFragment) as Button
-        val buttonShowScore = view.findViewById(R.id.buttonShowScore) as Button
+        val buttonStartSingleplayerFragment =
+                view.findViewById(R.id.buttonStartSingleplayerFragment) as Button
+        val buttonStartMultiplayerFragment =
+                view.findViewById(R.id.buttonStartMultiplayerFragment) as Button
+        val buttonShowScore =
+                view.findViewById(R.id.buttonShowScore) as Button
 
 
         val activityContext = activity!!.applicationContext
@@ -40,17 +43,28 @@ class DiceMenuFragment : android.support.v4.app.Fragment() {
         }
 
         buttonStartSingleplayerFragment.setOnClickListener {
-            fragmentManager!!.beginTransaction().replace(R.id.fragmentContainer, diceSingleplayerFragment).addToBackStack(null).commit()
+            val bundle = Bundle()
+            bundle.putBoolean("isMultiplayer", false)
+            diceSingleplayerFragment.arguments = bundle
+
+            fragmentManager!!.beginTransaction().replace(
+                    R.id.fragmentContainer,
+                    diceSingleplayerFragment).addToBackStack(null).commit()
         }
 
         buttonStartMultiplayerFragment.setOnClickListener {
-            fragmentManager!!.beginTransaction().replace(R.id.fragmentContainer, diceMultiplayerFragment).addToBackStack(null).commit()
+            fragmentManager!!.beginTransaction().replace(
+                    R.id.fragmentContainer,
+                    diceMultiplayerFragment,
+                    "multiplayerFragment").addToBackStack(null).commit()
         }
 
         buttonShowScore.setOnClickListener {
             val diceScoreListFragment = DiceScoreListFragment()
             diceScoreListFragment.listAdapter = DiceScoreListViewAdapter(activityContext, test)
-            fragmentManager!!.beginTransaction().replace(R.id.fragmentContainer, diceScoreListFragment).addToBackStack(null).commit()
+            fragmentManager!!.beginTransaction().replace(
+                    R.id.fragmentContainer,
+                    diceScoreListFragment).addToBackStack(null).commit()
         }
 
         return view

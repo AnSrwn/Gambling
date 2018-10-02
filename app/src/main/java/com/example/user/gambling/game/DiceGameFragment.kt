@@ -13,8 +13,6 @@ import kotlinx.android.synthetic.main.fragment_dice_singleplayer.*
 import pl.droidsonroids.gif.GifDrawable
 import pl.droidsonroids.gif.GifImageView
 
-
-
 class DiceGameFragment : android.support.v4.app.Fragment() {
 
     private var shakeListener: ShakeListener? = null
@@ -30,7 +28,7 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        //isMultiplayer = arguments!!.getBoolean("isMultiplayer")
+        isMultiplayer = arguments!!.getBoolean("isMultiplayer")
 
         val view = inflater.inflate(R.layout.fragment_dice_singleplayer, container, false)
 
@@ -50,46 +48,45 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
         shakeListener = ShakeListener(activity!!.applicationContext)
         shakeListener?.setOnShakeListener(object : ShakeListener.OnShakeListener {
 
-            var isShaked = false
-            var pickupAnimationRunning = false
+            var pickupAnimationFinished = false
+            var setAnimationFinished = false
             var setAnimationRunning = false
+            var shakingAnimationFinished = false
             var shakingAnimationRunning = false
-
 
             override fun onShake() {
 
                 //TODO find a way, to time animations without handlers
-                //TODO improve and reduce the boolean animation variables
 
-                if(!isShaked && !setAnimationRunning) {
+                if(!setAnimationFinished && !setAnimationRunning) {
                     gifImageViewDiceCup!!.setImageResource(R.drawable.gif_set_cup)
                     gifImageViewDiceCup!!.visibility = View.VISIBLE
                     gifDrawable!!.start()
+                    setAnimationRunning = true
 
                     Handler().postDelayed({
                         setDicesVisibilty(false)
                     }, 400)
 
-                    setAnimationRunning = true
-                } else if (!shakingAnimationRunning && setAnimationRunning) {
+                    Handler().postDelayed({
+                        setAnimationFinished = true
+                    }, 1000)
+
+                } else if (!shakingAnimationFinished && !shakingAnimationRunning && setAnimationFinished) {
+                    gifImageViewDiceCup!!.setImageResource(R.drawable.gif_real_cup)
+                    gifDrawable!!.start()
                     shakingAnimationRunning = true
-                    isShaked = true
 
                     Handler().postDelayed({
-                        gifDrawable!!.stop()
-                        gifImageViewDiceCup!!.setImageResource(R.drawable.gif_real_cup)
-                        gifDrawable!!.start()
                         shakingAnimationRunning = false
-                    }, 1000)
+                    }, 500)
                 }
             }
 
             override fun onShakeStop() {
-                if(isShaked && !pickupAnimationRunning && !shakingAnimationRunning) {
-                    setAnimationRunning = false
-                    pickupAnimationRunning = true
-
-                    gifDrawable!!.stop()
+                if(!pickupAnimationFinished && setAnimationFinished) {
+                    shakingAnimationFinished = true
+                    pickupAnimationFinished = true
 
                     diceScore.generateNewScores()
                     changeDice(imageViewDice1!!, diceScore.scoresOfDices[0])
@@ -100,6 +97,14 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
                     gifDrawable!!.start()
 
                     Handler().postDelayed({
+                        if(isMultiplayer) {
+                            val gameFragment = fragmentManager!!.findFragmentByTag("gameFragment")
+                            fragmentManager!!.beginTransaction().remove(gameFragment!!).commit()
+
+                            val multiplayerFragment = fragmentManager!!.findFragmentByTag("multiplayerFragment")
+                            fragmentManager!!.beginTransaction().show(multiplayerFragment!!).commit()
+                        }
+
                         textViewScore.text = getString(R.string.dice_single_score, diceScore.sumOfScores)
 
                         gifDrawable!!.stop()
@@ -111,9 +116,10 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
             }
 
             override fun onResume() {
-                isShaked = false
-                pickupAnimationRunning = false
+                pickupAnimationFinished = false
+                setAnimationFinished = false
                 setAnimationRunning = false
+                shakingAnimationFinished = false
                 shakingAnimationRunning = false
             }
         })

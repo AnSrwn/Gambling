@@ -1,16 +1,12 @@
 package com.example.user.gambling.game
 
-import android.content.ContentValues.TAG
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-
 import com.example.user.gambling.R
 import com.example.user.gambling.connection.Connection
 import com.example.user.gambling.connection.PermissionHandler
@@ -28,8 +24,6 @@ class DiceMultiplayerFragment : android.support.v4.app.Fragment() {
     private var statusText: TextView? = null
     private var findOpponentButton: Button? = null
     private var scoreText: TextView? = null
-    private var ownScoreEditText: EditText? = null
-    private var sendScoreButton: Button? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -38,20 +32,11 @@ class DiceMultiplayerFragment : android.support.v4.app.Fragment() {
         statusText = view.findViewById(R.id.textViewConnStatus)
         statusText!!.text = getString(R.string.dice_multi_status_disconnected)
 
-        scoreText = view.findViewById(R.id.textViewScore)
-        ownScoreEditText = view.findViewById(R.id.editTextSetOwnScore)
-
         findOpponentButton = view.findViewById(R.id.buttonConnFindOpponent)
         findOpponentButton!!.setOnClickListener {
             connection!!.findOpponent()
             statusText!!.text = getString(R.string.dice_multi_status_searching)
             findOpponentButton!!.isEnabled = false
-        }
-
-        sendScoreButton = view.findViewById(R.id.buttonSendScore)
-        sendScoreButton!!.setOnClickListener {
-            score = ownScoreEditText!!.text.toString().toInt()
-            connection!!.sendScore(score)
         }
         return view
     }
@@ -71,8 +56,8 @@ class DiceMultiplayerFragment : android.support.v4.app.Fragment() {
     }
 
     override fun onPause() {
-        connection!!.connectionsClient.stopAllEndpoints()
         super.onPause()
+        connection!!.connectionsClient.stopAllEndpoints()
     }
 
     // Callbacks for receiving payloads
@@ -105,8 +90,25 @@ class DiceMultiplayerFragment : android.support.v4.app.Fragment() {
 
                 statusText!!.text = getString(R.string.dice_multi_status_connected)
                 findOpponentButton!!.isEnabled = false
+
+                val diceGameFragment = DiceGameFragment()
+
+                val bundle = Bundle()
+                bundle.putBoolean("isMultiplayer", true)
+                diceGameFragment.arguments = bundle
+
+                fragmentManager!!.beginTransaction().add(
+                        com.example.user.gambling.R.id.fragmentContainer,
+                        diceGameFragment,
+                        "gameFragment").commit()
+
+                val multiplayerFragment = fragmentManager!!.findFragmentByTag("multiplayerFragment")
+                fragmentManager!!.beginTransaction().hide(multiplayerFragment!!).commit()
             } else {
-                Log.i(TAG, "onConnectionResult: connection failed")
+                Toast.makeText(
+                        activity,
+                        getString(R.string.dice_multi_toast_conn_failed),
+                        Toast.LENGTH_SHORT).show()
             }
         }
 
