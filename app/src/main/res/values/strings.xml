@@ -39,8 +39,12 @@
     <string name="dice_multi_status_disconnected">Disconnected</string>
     <string name="dice_multi_status_connected">Connected</string>
     <string name="dice_multi_status_searching">Searching</string>
+
     <string name="dice_multi_find_opponent">Connected</string>
     <string name="dice_multi_score">Score: %1$d : %2$d</string>
     <string name="dice_multi_send_score">Send score</string>
+
+    <string name="dice_multi_toast_permissions_denied">Permission denied</string>
+    <string name="dice_multi_toast_disconnected">Disconnected</string>
 
 </resources>

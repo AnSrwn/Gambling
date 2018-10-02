@@ -1,7 +1,6 @@
 package com.example.user.gambling.game
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +13,10 @@ import com.example.user.gambling.game.score.DiceScoreListFragment
 import com.example.user.gambling.game.score.DiceScoreListViewAdapter
 import org.jetbrains.anko.doAsync
 
-class DiceMenuFragment : Fragment() {
+class DiceMenuFragment : android.support.v4.app.Fragment() {
+
+    private val diceSingleplayerFragment = DiceGameFragment()
+    private val diceMultiplayerFragment = DiceMultiplayerFragment()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -37,22 +39,20 @@ class DiceMenuFragment : Fragment() {
 
         }
 
-
         buttonStartSingleplayerFragment.setOnClickListener {
-            val diceSingleplayerFragment = DiceSingleplayerFragment()
             fragmentManager!!.beginTransaction().replace(R.id.fragmentContainer, diceSingleplayerFragment).addToBackStack(null).commit()
         }
 
         buttonStartMultiplayerFragment.setOnClickListener {
-            val diceMultiplayerFragment = DiceMultiplayerFragment()
             fragmentManager!!.beginTransaction().replace(R.id.fragmentContainer, diceMultiplayerFragment).addToBackStack(null).commit()
         }
 
         buttonShowScore.setOnClickListener {
             val diceScoreListFragment = DiceScoreListFragment()
-           diceScoreListFragment.listAdapter = DiceScoreListViewAdapter(activityContext, test)
+            diceScoreListFragment.listAdapter = DiceScoreListViewAdapter(activityContext, test)
             fragmentManager!!.beginTransaction().replace(R.id.fragmentContainer, diceScoreListFragment).addToBackStack(null).commit()
         }
+
         return view
     }
 }

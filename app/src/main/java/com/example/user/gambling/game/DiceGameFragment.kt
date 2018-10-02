@@ -13,7 +13,9 @@ import kotlinx.android.synthetic.main.fragment_dice_singleplayer.*
 import pl.droidsonroids.gif.GifDrawable
 import pl.droidsonroids.gif.GifImageView
 
-class DiceSingleplayerFragment : android.support.v4.app.Fragment() {
+
+
+class DiceGameFragment : android.support.v4.app.Fragment() {
 
     private var shakeListener: ShakeListener? = null
     private var gifImageViewDiceCup: GifImageView? = null
@@ -23,8 +25,12 @@ class DiceSingleplayerFragment : android.support.v4.app.Fragment() {
 
     private val diceScore = DiceScore(2)
 
+    private var isMultiplayer = false
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+
+        //isMultiplayer = arguments!!.getBoolean("isMultiplayer")
 
         val view = inflater.inflate(R.layout.fragment_dice_singleplayer, container, false)
 
