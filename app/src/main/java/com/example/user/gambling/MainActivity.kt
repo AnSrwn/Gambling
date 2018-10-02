@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         Utils.onActivityCreateSetTheme(this)
         setContentView(R.layout.activity_main)
+
         supportFragmentManager.beginTransaction().add(R.id.fragmentContainer, diceMenuFragment).commit()
     }
 

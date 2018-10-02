@@ -4,6 +4,7 @@ import android.arch.persistence.room.Database
 import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.content.Context
+import android.util.Log
 import com.example.user.gambling.database.daos.ScoreDao
 import com.example.user.gambling.database.entities.Score
 
@@ -16,14 +17,17 @@ abstract class ScoreDB : RoomDatabase() {
         private var sInstance: ScoreDB? = null
 
         fun getInstance(context: Context): ScoreDB? {
+            Log.d("DBG", "Started get Instance")
             if (sInstance == null) {
                 synchronized(ScoreDB::class) {
+                    Log.d("DBG", "Synchronized Block")
                     sInstance = Room.databaseBuilder(context.applicationContext,
-                            ScoreDB::class.java, "score")
-                            .fallbackToDestructiveMigration()
+                            ScoreDB::class.java, "score.db")
+                            //.fallbackToDestructiveMigration()
                             .build()
                 }
             }
+            Log.d("DBG", "End of synch Block")
             return sInstance
         }
     }
