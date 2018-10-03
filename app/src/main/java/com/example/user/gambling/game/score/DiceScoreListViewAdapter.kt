@@ -23,9 +23,9 @@ class DiceScoreListViewAdapter(private val context: Context, private val scores:
         convertView.tag = holder*/
         val rowView = inflater.inflate(R.layout.item_dice_score, parent, false)
         val thisScore = scores!![position]
-        var tv = rowView.findViewById(R.id.playerName) as TextView
+        var tv = rowView.findViewById(R.id.playersNames) as TextView
         tv.text = thisScore.playerName
-        tv = rowView.findViewById(R.id.playersScore) as TextView
+        tv = rowView.findViewById(R.id.playersScores) as TextView
         tv.text = String.format("%d", thisScore.score)
         return rowView
     }
