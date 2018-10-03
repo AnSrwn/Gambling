@@ -1,5 +1,7 @@
 package com.example.user.gambling.game
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -26,6 +28,8 @@ class DiceMenuFragment : android.support.v4.app.Fragment() {
                 view.findViewById(R.id.buttonStartMultiplayerFragment) as Button
         val buttonShowScore =
                 view.findViewById(R.id.buttonShowScore) as Button
+        val buttonSetPlayerName =
+                view.findViewById(R.id.buttonChangePlayersName) as Button
 
 
         val activityContext = activity!!.applicationContext
@@ -38,6 +42,12 @@ class DiceMenuFragment : android.support.v4.app.Fragment() {
             test = db.getAllNotLive()
             Log.d("DBG", "Got all not Live ${db.getAllNotLive()}")
 
+        }
+
+        buttonSetPlayerName.setOnClickListener{
+            Log.d("DBG", "Start Dialog")
+            val dialogFragment = SetPlayerNameDialogFragment()
+            dialogFragment.show(fragmentManager,"")
         }
 
         buttonStartSingleplayerFragment.setOnClickListener {

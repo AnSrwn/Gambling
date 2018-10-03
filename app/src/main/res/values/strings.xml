@@ -16,6 +16,11 @@
     <string name="dice_menu_player_name">Name Placeholder</string>
     <string name="dice_menu_change_player_name">Change Name</string>
 
+
+    <string name="dialog_player_name">Username</string>
+    <string name="dialog_confirm">OK</string>
+    <string name="dialog_cancel">Cancel</string>
+
     <!-- Options Menu -->
     <string name="opt_pref">Settings</string>
     <string name="opt_help">Help</string>
