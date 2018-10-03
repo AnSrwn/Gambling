@@ -15,8 +15,6 @@ import org.jetbrains.anko.doAsync
 
 class DiceMenuFragment : android.support.v4.app.Fragment() {
 
-    private val diceSingleplayerFragment = DiceGameFragment()
-    private val diceMultiplayerFragment = DiceMultiplayerFragment()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -32,7 +30,7 @@ class DiceMenuFragment : android.support.v4.app.Fragment() {
 
         val activityContext = activity!!.applicationContext
         val db = ScoreDB.getInstance(activityContext)!!.scoreDB()
-        var test : List<Score>? = null
+        var test: List<Score>? = null
         doAsync {
             db.insert(Score(1, "Test", 20))
             db.insert(Score(2, "Test2", 10))
@@ -45,6 +43,7 @@ class DiceMenuFragment : android.support.v4.app.Fragment() {
         buttonStartSingleplayerFragment.setOnClickListener {
             val bundle = Bundle()
             bundle.putBoolean("isMultiplayer", false)
+            val diceSingleplayerFragment = DiceGameFragment()
             diceSingleplayerFragment.arguments = bundle
 
             fragmentManager!!.beginTransaction().replace(
@@ -53,6 +52,7 @@ class DiceMenuFragment : android.support.v4.app.Fragment() {
         }
 
         buttonStartMultiplayerFragment.setOnClickListener {
+            val diceMultiplayerFragment = DiceMultiplayerFragment()
             fragmentManager!!.beginTransaction().replace(
                     R.id.fragmentContainer,
                     diceMultiplayerFragment,
