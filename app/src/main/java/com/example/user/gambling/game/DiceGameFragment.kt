@@ -1,5 +1,6 @@
 package com.example.user.gambling.game
 
+import android.arch.lifecycle.ViewModelProviders
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.os.Handler
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import com.example.user.gambling.R
 import com.example.user.gambling.game.score.DiceScore
+import com.example.user.gambling.game.score.ScoreViewModel
 import kotlinx.android.synthetic.main.fragment_dice_singleplayer.*
 import pl.droidsonroids.gif.GifDrawable
 import pl.droidsonroids.gif.GifImageView
@@ -98,14 +100,19 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
 
                     Handler().postDelayed({
                         if(isMultiplayer) {
+                            activity?.let {
+                                val scoreViewModel = ViewModelProviders.of(it).get(ScoreViewModel::class.java)
+                                scoreViewModel.myScore.postValue(diceScore.sumOfScores)
+                            }
+
                             val gameFragment = fragmentManager!!.findFragmentByTag("gameFragment")
                             fragmentManager!!.beginTransaction().remove(gameFragment!!).commit()
 
                             val multiplayerFragment = fragmentManager!!.findFragmentByTag("multiplayerFragment")
                             fragmentManager!!.beginTransaction().show(multiplayerFragment!!).commit()
+                        } else {
+                            textViewScore.text = getString(R.string.dice_single_score, diceScore.sumOfScores)
                         }
-
-                        textViewScore.text = getString(R.string.dice_single_score, diceScore.sumOfScores)
 
                         gifDrawable!!.stop()
                         gifImageViewDiceCup!!.visibility = View.GONE
