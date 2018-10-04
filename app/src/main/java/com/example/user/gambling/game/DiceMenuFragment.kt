@@ -1,7 +1,7 @@
 package com.example.user.gambling.game
 
-import android.app.AlertDialog
-import android.content.DialogInterface
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,13 +13,17 @@ import com.example.user.gambling.database.databases.ScoreDB
 import com.example.user.gambling.database.entities.Score
 import com.example.user.gambling.game.score.DiceScoreListFragment
 import com.example.user.gambling.game.score.DiceScoreListViewAdapter
+import kotlinx.android.synthetic.main.fragment_dice_menu.*
 import org.jetbrains.anko.doAsync
+
 
 class DiceMenuFragment : android.support.v4.app.Fragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+
+        registerForPlayerNameUpdates()
 
         val view = inflater.inflate(R.layout.fragment_dice_menu, container, false)
         val buttonStartSingleplayerFragment =
@@ -47,7 +51,7 @@ class DiceMenuFragment : android.support.v4.app.Fragment() {
         buttonSetPlayerName.setOnClickListener{
             Log.d("DBG", "Start Dialog")
             val dialogFragment = SetPlayerNameDialogFragment()
-            dialogFragment.show(fragmentManager,"")
+            dialogFragment.show(fragmentManager,"playername")
         }
 
         buttonStartSingleplayerFragment.setOnClickListener {
@@ -76,7 +80,17 @@ class DiceMenuFragment : android.support.v4.app.Fragment() {
                     R.id.fragmentContainer,
                     diceScoreListFragment).addToBackStack(null).commit()
         }
-
         return view
+    }
+
+    private fun registerForPlayerNameUpdates() {
+        activity?.let { fragmentActivity ->
+            val sharedViewModel = ViewModelProviders.of(fragmentActivity).get(UserNameViewModel::class.java)
+            sharedViewModel.userName.observe(this, Observer { i ->
+                i?.let {
+                    playerName.text = it
+                }
+            })
+        }
     }
 }

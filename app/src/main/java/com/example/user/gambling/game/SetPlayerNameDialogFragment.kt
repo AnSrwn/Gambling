@@ -1,42 +1,64 @@
 package com.example.user.gambling.game
 
 import android.app.Dialog
-import android.content.DialogInterface
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
-import android.support.v7.app.AlertDialog
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.Window
+import android.widget.Button
+import android.widget.TextView
+import android.widget.Toast
+import com.example.user.gambling.R
 
-class SetPlayerNameDialogFragment : DialogFragment(){
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        /*return activity?.let {
-            val builder  = AlertDialog.Builder(it)
-            builder.setView(layoutInflater.inflate(R.layout.dialog_player_name, null))
+class SetPlayerNameDialogFragment : DialogFragment() {
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view: View? = inflater.inflate(R.layout.dialog_player_name, container, false)
+        val btnCancelDialog: Button = view!!.findViewById(R.id.buttonCancelDialog)
+        val btnConfirmDialog: Button = view.findViewById(R.id.buttonConfirmDialog)
 
-                    // Add action buttons
-                    .setPositiveButton(R.string.dialog_confirm,
-                            DialogInterface.OnClickListener { dialog, id ->
-                                // set username
+        btnCancelDialog.setOnClickListener {
+            dialog.dismiss()
+            Toast.makeText(context, "No new player name set!", Toast.LENGTH_SHORT).show()
+        }
 
-                            })
-                    .setNegativeButton(R.string.dialog_cancel,
-                            DialogInterface.OnClickListener { dialog, id ->
-                                getDialog().cancel()
-                            })
-            builder.create()
-        } ?: throw IllegalStateException("Activity cannot be null")*/
-        return activity.let {
-            val builder = AlertDialog.Builder(context!!)
-            builder.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
+        btnConfirmDialog.setOnClickListener {
+            val eTUserName: TextView = view.findViewById(R.id.username)
+            val newPlayerName = eTUserName.text.toString()
+            if (isPlayerNameNotValid(newPlayerName)) {
+                eTUserName.error = "Cannot be empty!"
+            } else {
+                updateObserver(newPlayerName)
+                dialog.dismiss()
+                Toast.makeText(context, "Set $newPlayerName as new player name.", Toast.LENGTH_SHORT).show()
+            }
+        }
+        return view
+    }
 
-            })
-                    .setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, which ->
-                        dialog.cancel()
-                    })
-                    .setMessage("ZTest")
-
-
-            builder.create()
+    private fun updateObserver(newPlayerName: String) {
+        activity?.let { it2 ->
+            val userNameViewModel = ViewModelProviders.of(it2).get(UserNameViewModel::class.java)
+            userNameViewModel.userName.postValue(newPlayerName)
         }
     }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        // The only reason you might override this method when using onCreateView() is
+        // to modify any dialog characteristics. For example, the dialog includes a
+        // title by default, but your custom layout might not need it. So here you can
+        // remove the dialog title, but you must call the superclass to get the Dialog.
+        val dialog = super.onCreateDialog(savedInstanceState)
+        dialog.requestWindowFeature(Window.FEATURE_SWIPE_TO_DISMISS)
+        return dialog
+    }
+
+    private fun isPlayerNameNotValid(playerName: String): Boolean {
+        return playerName.isEmpty()
+    }
+
+
 }
