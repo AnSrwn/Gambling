@@ -20,6 +20,7 @@ import java.nio.charset.StandardCharsets.UTF_8
 class DiceMultiplayerFragment : android.support.v4.app.Fragment() {
 
     private var connection: Connection? = null
+    private var username = "defaultName"
 
     private var myScore = 0
     private var opponentScore = 0
@@ -42,13 +43,14 @@ class DiceMultiplayerFragment : android.support.v4.app.Fragment() {
         findOpponentButton = view.findViewById(R.id.buttonConnFindOpponent)
         btnContinueGame = view.findViewById(R.id.buttonContinueMultiGame)
 
-        yourScoreText!!.visibility = View.GONE
-        opponentScoreText!!.visibility = View.GONE
-        totalScoreText!!.visibility = View.GONE
-        btnContinueGame!!.visibility = View.GONE
+        setViewsVisibility(false)
 
         btnContinueGame!!.setOnClickListener {
+            myScore = 0
+            opponentScore = 0
+
             startGameFragment()
+            btnContinueGame!!.visibility = View.GONE
         }
 
         findOpponentButton!!.setOnClickListener {
@@ -57,16 +59,9 @@ class DiceMultiplayerFragment : android.support.v4.app.Fragment() {
             findOpponentButton!!.isEnabled = false
         }
 
-        activity?.let { fragmentActivity ->
-            val sharedViewModel = ViewModelProviders.of(fragmentActivity).get(ScoreViewModel::class.java)
+        registerForPlayerNameUpdates()
+        registerForScoreUpdates()
 
-            sharedViewModel.myScore.observe(this, Observer { i ->
-                i?.let {
-                    myScore = it
-                    connection?.sendScore(myScore)
-                }
-            })
-        }
         return view
     }
 
@@ -81,7 +76,8 @@ class DiceMultiplayerFragment : android.support.v4.app.Fragment() {
         connection = Connection(
                 Nearby.getConnectionsClient(requireActivity()),
                 context!!,
-                connectionLifecycleCallback)
+                connectionLifecycleCallback,
+                username!!)
     }
 
     override fun onPause() {
@@ -110,12 +106,13 @@ class DiceMultiplayerFragment : android.support.v4.app.Fragment() {
 
                 yourScoreText!!.text = getString(R.string.dice_multi_your_score, myScore)
                 opponentScoreText!!.text = getString(R.string.dice_multi_opponent_score, opponentScore)
-                totalScoreText!!.text = getString(R.string.dice_multi_total_score, myTotalScore, opponentTotalScore)
+                totalScoreText!!.text = getString(
+                        R.string.dice_multi_total_score,
+                        myTotalScore,
+                        opponentTotalScore,
+                        connection!!.opponentName)
 
-                yourScoreText!!.visibility = View.VISIBLE
-                opponentScoreText!!.visibility = View.VISIBLE
-                totalScoreText!!.visibility = View.VISIBLE
-                btnContinueGame!!.visibility = View.VISIBLE
+                setViewsVisibility(true)
             }
         }
     }
@@ -146,19 +143,15 @@ class DiceMultiplayerFragment : android.support.v4.app.Fragment() {
         }
 
         override fun onDisconnected(endpointId: String) {
-
-            findOpponentButton!!.text = getString(R.string.dice_multi_find_opponent)
-            findOpponentButton!!.isEnabled = true
-            findOpponentButton!!.visibility = View.VISIBLE
-
-
-            myTotalScore = 0
-            opponentTotalScore = 0
-
             //in case you get disconnected in the middle of the game, gameFragment must be removed
             // and multiplayerFramgent resetted
+
+            resetDiceMultiplayerFragment()
+
             val gameFragment = fragmentManager!!.findFragmentByTag("gameFragment")
-            fragmentManager!!.beginTransaction().remove(gameFragment!!).commit()
+            if(gameFragment != null) {
+                fragmentManager!!.beginTransaction().remove(gameFragment).commit()
+            }
 
             val multiplayerFragment = fragmentManager!!.findFragmentByTag("multiplayerFragment")
             fragmentManager!!.beginTransaction().show(multiplayerFragment!!).commit()
@@ -170,7 +163,7 @@ class DiceMultiplayerFragment : android.support.v4.app.Fragment() {
         }
     }
 
-    fun setTotalScore(myScore: Int, opponentScore: Int) {
+    private fun setTotalScore(myScore: Int, opponentScore: Int) {
         if(myScore > opponentScore) {
             myTotalScore++
         } else {
@@ -178,7 +171,31 @@ class DiceMultiplayerFragment : android.support.v4.app.Fragment() {
         }
     }
 
-    fun startGameFragment() {
+    private fun setViewsVisibility(visible: Boolean) {
+        if (visible) {
+            yourScoreText!!.visibility = View.VISIBLE
+            opponentScoreText!!.visibility = View.VISIBLE
+            totalScoreText!!.visibility = View.VISIBLE
+            btnContinueGame!!.visibility = View.VISIBLE
+        } else {
+            yourScoreText!!.visibility = View.GONE
+            opponentScoreText!!.visibility = View.GONE
+            totalScoreText!!.visibility = View.GONE
+            btnContinueGame!!.visibility = View.GONE
+        }
+    }
+
+     private fun resetDiceMultiplayerFragment() {
+        findOpponentButton!!.text = getString(R.string.dice_multi_find_opponent)
+        findOpponentButton!!.isEnabled = true
+        findOpponentButton!!.visibility = View.VISIBLE
+        setViewsVisibility(false)
+
+        myTotalScore = 0
+        opponentTotalScore = 0
+    }
+
+    private fun startGameFragment() {
         myScore = 0
         opponentScore = 0
 
@@ -195,5 +212,28 @@ class DiceMultiplayerFragment : android.support.v4.app.Fragment() {
 
         val multiplayerFragment = fragmentManager!!.findFragmentByTag("multiplayerFragment")
         fragmentManager!!.beginTransaction().hide(multiplayerFragment!!).commit()
+    }
+
+    private fun registerForPlayerNameUpdates() {
+        activity?.let { fragmentActivity ->
+            val sharedViewModel = ViewModelProviders.of(fragmentActivity).get(UserNameViewModel::class.java)
+            sharedViewModel.userName.observe(this, Observer { i ->
+                i?.let {
+                    username = it
+                }
+            })
+        }
+    }
+
+    private fun registerForScoreUpdates() {
+        activity?.let { fragmentActivity ->
+            val sharedViewModel = ViewModelProviders.of(fragmentActivity).get(ScoreViewModel::class.java)
+            sharedViewModel.myScore.observe(this, Observer { i ->
+                i?.let {
+                    myScore = it
+                    connection?.sendScore(myScore)
+                }
+            })
+        }
     }
 }

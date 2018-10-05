@@ -50,7 +50,7 @@
     <string name="dice_multi_find_opponent">Find Opponent</string>
     <string name="dice_multi_your_score">You: %1$d</string>
     <string name="dice_multi_opponent_score">Opponent: %1$d</string>
-    <string name="dice_multi_total_score">You   %1$d : %2$d   Opponent</string>
+    <string name="dice_multi_total_score">You   %1$d : %2$d   %3$s</string>
     <string name="dice_multi_send_score">Send score</string>
 
     <string name="dice_multi_toast_permissions_denied">Permission denied</string>

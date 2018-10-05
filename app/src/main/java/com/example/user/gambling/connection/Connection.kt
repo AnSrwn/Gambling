@@ -9,10 +9,10 @@ import java.nio.charset.StandardCharsets
 class Connection(
         val connectionsClient: ConnectionsClient,
         private val context: Context,
-        private val connectionLifecycleCallback: ConnectionLifecycleCallback) {
+        private val connectionLifecycleCallback: ConnectionLifecycleCallback,
+        private val username: String) {
 
     private val strategy = Strategy.P2P_STAR
-    private val codeName = CodenameGenerator().generate()
 
     var opponentEndpointId: String? = null
     var opponentName: String? = null
@@ -37,7 +37,7 @@ class Connection(
     private val endpointDiscoveryCallback = object : EndpointDiscoveryCallback() {
         override fun onEndpointFound(endpointId: String, info: DiscoveredEndpointInfo) {
             Log.i(ContentValues.TAG, "onEndpointFound: endpoint found, connecting")
-            connectionsClient.requestConnection(codeName, endpointId, connectionLifecycleCallback)
+            connectionsClient.requestConnection(username, endpointId, connectionLifecycleCallback)
         }
 
         override fun onEndpointLost(endpointId: String) {}
@@ -51,7 +51,7 @@ class Connection(
 
     private fun startAdvertising() {
         connectionsClient.startAdvertising(
-                codeName, context.packageName, connectionLifecycleCallback,
+                username, context.packageName, connectionLifecycleCallback,
                 AdvertisingOptions.Builder().setStrategy(strategy).build())
     }
 }
