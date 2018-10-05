@@ -62,7 +62,8 @@ class DiceMenuFragment : android.support.v4.app.Fragment() {
 
             fragmentManager!!.beginTransaction().replace(
                     R.id.fragmentContainer,
-                    diceSingleplayerFragment).addToBackStack(null).commit()
+                    diceSingleplayerFragment,
+                    "singleplayerFragment").addToBackStack(null).commit()
         }
 
         buttonStartMultiplayerFragment.setOnClickListener {

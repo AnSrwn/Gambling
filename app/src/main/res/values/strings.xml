@@ -41,22 +41,24 @@
     <!-- DiceSingleplayer -->
     <string name="dice_single_imageView_description">Result of the dice shake</string>
     <string name="dice_single_score">Score: %1$d</string>
+    <string name="dice_single_restart">Restart</string>
 
     <!-- DiceMultiplayer -->
     <string name="dice_multi_status_disconnected">Disconnected</string>
     <string name="dice_multi_status_connected">Connected</string>
     <string name="dice_multi_status_searching">Searching&#8230;</string>
 
-    <string name="dice_multi_find_opponent">Find Opponent</string>
     <string name="dice_multi_your_score">You: %1$d</string>
     <string name="dice_multi_opponent_score">Opponent: %1$d</string>
     <string name="dice_multi_total_score">You   %1$d : %2$d   %3$s</string>
-    <string name="dice_multi_send_score">Send score</string>
 
     <string name="dice_multi_toast_permissions_denied">Permission denied</string>
     <string name="dice_multi_toast_disconnected">Disconnected</string>
     <string name="dice_multi_toast_conn_failed">Connection failed</string>
 
+    <string name="dice_multi_find_opponent">Find Opponent</string>
     <string name="dice_multi_continue_game">Continue Game</string>
+    <string name="dice_multi_send_score">Send score</string>
+    <string name="dice_multi_waiting">Waiting for Opponent&#8230;</string>
 
 </resources>

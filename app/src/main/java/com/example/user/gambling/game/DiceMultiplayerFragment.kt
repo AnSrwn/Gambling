@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import com.example.user.gambling.R
@@ -33,6 +34,8 @@ class DiceMultiplayerFragment : android.support.v4.app.Fragment() {
     private var opponentScoreText: TextView? = null
     private var totalScoreText: TextView? = null
 
+    private var loadingPanel: RelativeLayout? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_dice_multiplayer, container, false)
@@ -44,6 +47,9 @@ class DiceMultiplayerFragment : android.support.v4.app.Fragment() {
         btnContinueGame = view.findViewById(R.id.buttonContinueMultiGame)
 
         setViewsVisibility(false)
+
+        loadingPanel = view.findViewById(R.id.waitForOpponentLoadingPanel)
+        loadingPanel!!.visibility = View.GONE
 
         btnContinueGame!!.setOnClickListener {
             myScore = 0
@@ -77,7 +83,7 @@ class DiceMultiplayerFragment : android.support.v4.app.Fragment() {
                 Nearby.getConnectionsClient(requireActivity()),
                 context!!,
                 connectionLifecycleCallback,
-                username!!)
+                username)
     }
 
     override fun onPause() {
@@ -101,6 +107,8 @@ class DiceMultiplayerFragment : android.support.v4.app.Fragment() {
                     PayloadTransferUpdate.Status.SUCCESS
                     && myScore != 0
                     && opponentScore != 0) {
+
+                loadingPanel!!.visibility = View.GONE
 
                 setTotalScore(myScore, opponentScore)
 
@@ -189,7 +197,10 @@ class DiceMultiplayerFragment : android.support.v4.app.Fragment() {
         findOpponentButton!!.text = getString(R.string.dice_multi_find_opponent)
         findOpponentButton!!.isEnabled = true
         findOpponentButton!!.visibility = View.VISIBLE
+
+        loadingPanel!!.visibility = View.GONE
         setViewsVisibility(false)
+
 
         myTotalScore = 0
         opponentTotalScore = 0
@@ -232,6 +243,7 @@ class DiceMultiplayerFragment : android.support.v4.app.Fragment() {
                 i?.let {
                     myScore = it
                     connection?.sendScore(myScore)
+                    loadingPanel!!.visibility = View.VISIBLE
                 }
             })
         }

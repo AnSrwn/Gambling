@@ -7,6 +7,7 @@ import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import com.example.user.gambling.R
 import com.example.user.gambling.game.score.DiceScore
@@ -22,6 +23,7 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
     private var gifDrawable: GifDrawable? = null
     private var imageViewDice1: ImageView? = null
     private var imageViewDice2: ImageView? = null
+    private var btnRestart: Button? = null
 
     private val diceScore = DiceScore(2)
 
@@ -46,6 +48,12 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
 
         gifImageViewDiceCup!!.visibility = View.GONE
         gifDrawable!!.stop()
+
+        btnRestart = view.findViewById(R.id.buttonRestart)
+        btnRestart!!.setOnClickListener {
+            restartGameFragment()
+        }
+        btnRestart!!.visibility = View.GONE
 
         shakeListener = ShakeListener(activity!!.applicationContext)
         shakeListener?.setOnShakeListener(object : ShakeListener.OnShakeListener {
@@ -111,6 +119,7 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
                             val multiplayerFragment = fragmentManager!!.findFragmentByTag("multiplayerFragment")
                             fragmentManager!!.beginTransaction().show(multiplayerFragment!!).commit()
                         } else {
+                            btnRestart!!.visibility = View.VISIBLE
                             textViewScore.text = getString(R.string.dice_single_score, diceScore.sumOfScores)
                         }
 
@@ -143,6 +152,15 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
         shakeListener!!.pause()
         activity!!.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
         super.onPause()
+    }
+
+    private fun restartGameFragment() {
+        val diceSingleplayerFragment = fragmentManager!!.findFragmentByTag("singleplayerFragment")
+
+        fragmentManager!!.beginTransaction()
+                .detach(diceSingleplayerFragment!!)
+                .attach(diceSingleplayerFragment)
+                .commit()
     }
 
     fun setDicesVisibilty(setVisible: Boolean) {
