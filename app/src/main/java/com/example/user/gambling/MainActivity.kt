@@ -1,6 +1,7 @@
 package com.example.user.gambling
 
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -21,6 +22,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         Utils.onActivityCreateSetTheme(this)
         setContentView(R.layout.activity_main)
+
+        this.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         supportFragmentManager.beginTransaction().add(R.id.fragmentContainer, diceMenuFragment).commit()
     }

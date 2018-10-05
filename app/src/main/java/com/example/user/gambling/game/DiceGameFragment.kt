@@ -144,13 +144,11 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
 
     override fun onResume() {
         shakeListener!!.resume()
-        activity!!.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         super.onResume()
     }
 
     override fun onPause() {
         shakeListener!!.pause()
-        activity!!.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
         super.onPause()
     }
 
