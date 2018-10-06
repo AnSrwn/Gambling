@@ -41,6 +41,8 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
     private var isMultiplayer = false
     private var currentPlayerName : String? = null
 
+    private var audioPlayer: AudioPlayer? = null
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -67,6 +69,8 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
             restartGameFragment()
         }
         btnRestart!!.visibility = View.GONE
+
+        audioPlayer = AudioPlayer(context!!)
 
         shakeListener = ShakeListener(activity!!.applicationContext)
         startGifAnimations()
@@ -106,8 +110,13 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
             var setAnimationRunning = false
             var shakingAnimationFinished = false
             var shakingAnimationRunning = false
+            var shakingSoundrunning = false
 
             override fun onShake() {
+                if(!shakingSoundrunning) {
+                    audioPlayer!!.startDiceShakeSound()
+                    shakingSoundrunning = true
+                }
                 if(!shakingAnimationRunning) {
                     gifImageViewDiceCup!!.setImageResource(R.drawable.gif_real_cup)
                     gifDrawable!!.start()
@@ -124,10 +133,14 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
                 if(!pickupAnimationFinished && shakingAnimationFinished) {
                     pickupAnimationFinished = true
 
+                    audioPlayer!!.stopDiceShakeSound()
+
                     diceScore.generateNewScores()
                     changeDice(imageViewDice1!!, diceScore.scoresOfDices[0])
                     changeDice(imageViewDice2!!, diceScore.scoresOfDices[1])
                     setDicesVisibilty(true)
+
+                    audioPlayer!!.playDiceRollSound()
 
                     gifImageViewDiceCup!!.setImageResource(R.drawable.gif_pickup_cup)
                     gifDrawable!!.start()
