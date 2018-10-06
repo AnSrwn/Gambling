@@ -240,8 +240,6 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
                 db.insert(Score(curSize + 1, playerName, rolledScore))
             }
             Log.d("DBG", "$rolledScore in DB inserted")
-            db.insert(Score(curSize+1, playerName ,rolledScore))
-            Log.d("DBG", "$rolledScore in DB inserted")
         }
     }
 
