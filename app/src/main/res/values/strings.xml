@@ -57,6 +57,9 @@
     <string name="dice_multi_toast_permissions_denied">Permission denied</string>
     <string name="dice_multi_toast_disconnected">Disconnected</string>
     <string name="dice_multi_toast_conn_failed">Connection failed</string>
+    <string name="dice_multi_toast_round_won">You won this round!</string>
+    <string name="dice_multi_toast_round_lost">You lost this round :(</string>
+    <string name="dice_multi_toast_round_tie">Tie!</string>
 
     <string name="dice_multi_find_opponent">Find Opponent</string>
     <string name="dice_multi_continue_game">Continue Game</string>

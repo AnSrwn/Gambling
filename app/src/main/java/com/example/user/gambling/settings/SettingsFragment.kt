@@ -8,13 +8,16 @@ import android.support.v7.preference.PreferenceManager
 import android.util.Log
 import com.example.user.gambling.R
 
-class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener{
+class SettingsFragment : PreferenceFragmentCompat(){
+
+    //TODO show choice beneath category
 
     override fun onCreatePreferences(p0: Bundle?, p1: String?) {
         addPreferencesFromResource(R.xml.preferences)
-        preferenceManager.sharedPreferences.registerOnSharedPreferenceChangeListener(this) // register listener
-        setPrefTextInformation()
+        //preferenceManager.sharedPreferences.registerOnSharedPreferenceChangeListener(this) // register listener
+        //setPrefTextInformation()
     }
+    /*
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         updateChangedPreference(key)
@@ -37,5 +40,5 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
             val changedPref: Preference = findPreference(key)
             changedPref.summary = PreferenceManager.getDefaultSharedPreferences(requireActivity())?.getString(key, "")
         }
-    }
+    } */
 }
