@@ -12,6 +12,9 @@ interface ScoreDao{
     @Query("SELECT * FROM score")
     fun getAllNotLive():List<Score>
 
+    @Query("SELECT * FROM score ORDER BY score_entry ASC LIMIT 1")
+    fun getEntryWithMinScore():Score
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(score: Score)
 

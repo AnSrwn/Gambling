@@ -22,17 +22,22 @@ import android.widget.Toast
 
 class DiceGameFragment : android.support.v4.app.Fragment() {
 
+    companion object {
+        private const val MAX_DATABASE_ENTRIES = 10
+    }
+
+    private val diceScore = DiceScore(2)
+
+
     private var shakeListener: ShakeListener? = null
     private var gifImageViewDiceCup: GifImageView? = null
     private var gifDrawable: GifDrawable? = null
     private var imageViewDice1: ImageView? = null
     private var imageViewDice2: ImageView? = null
+
     private var btnRestart: Button? = null
 
-    private val diceScore = DiceScore(2)
-
     private var isMultiplayer = false
-
     private var currentPlayerName : String? = null
 
 
@@ -191,12 +196,27 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
         }
     }
 
+    /**
+     * Score will be inserted in Database, up to MAX_DATABASE_ENTRIES.
+     * If MAX_DATABASE_ENTRIES lowest score will be replaced if rolled score is higher than the lowest.
+     * @param playerName Players name.
+     * @param rolledScore of the player.
+     */
     private fun insertScoreinDB(playerName : String, rolledScore: Int) {
         val db = ScoreDB.getInstance(context!!)!!.scoreDB()
         doAsync {
             val curSize = db.getAllNotLive().size
-            db.insert(Score(curSize+1, playerName ,rolledScore))
-            Log.d("DBG", "${rolledScore} in DB inserted")
+            if(curSize >= MAX_DATABASE_ENTRIES ){
+                val minScoreInDB = db.getEntryWithMinScore()
+                if(rolledScore > minScoreInDB.score) {
+                    db.update(Score(minScoreInDB.id, playerName, rolledScore))
+                }else{
+                    //Nothing happens
+                }
+            }else {
+                db.insert(Score(curSize + 1, playerName, rolledScore))
+            }
+            Log.d("DBG", "$rolledScore in DB inserted")
         }
     }
 }
