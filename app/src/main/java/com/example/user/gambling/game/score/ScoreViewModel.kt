@@ -6,4 +6,5 @@ import android.arch.lifecycle.ViewModel
 class ScoreViewModel : ViewModel() {
     val myScore = MutableLiveData<Int>()
     val opponentScore = MutableLiveData<Int>()
+
 }

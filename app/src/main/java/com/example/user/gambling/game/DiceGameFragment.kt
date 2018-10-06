@@ -3,15 +3,19 @@ package com.example.user.gambling.game
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import com.example.user.gambling.R
+import com.example.user.gambling.database.databases.ScoreDB
+import com.example.user.gambling.database.entities.Score
 import com.example.user.gambling.game.score.DiceScore
 import com.example.user.gambling.game.score.ScoreViewModel
 import kotlinx.android.synthetic.main.fragment_dice_singleplayer.*
+import org.jetbrains.anko.doAsync
 import pl.droidsonroids.gif.GifDrawable
 import pl.droidsonroids.gif.GifImageView
 import android.widget.Toast
@@ -29,10 +33,14 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
 
     private var isMultiplayer = false
 
+    private var currentPlayerName : String? = null
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
         isMultiplayer = arguments!!.getBoolean("isMultiplayer")
+        currentPlayerName = arguments!!.getString("playerName")
 
         val view = inflater.inflate(R.layout.fragment_dice_singleplayer, container, false)
 
@@ -131,6 +139,13 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
                         } else {
                             btnRestart!!.visibility = View.VISIBLE
                             textViewScore.text = getString(R.string.dice_single_score, diceScore.sumOfScores)
+                            //Save score only for single player
+                            val db = ScoreDB.getInstance(context!!)!!.scoreDB()
+                            doAsync {
+                                val curSize = db.getAllNotLive().size
+                                db.insert(Score(curSize+1, currentPlayerName!! ,diceScore.sumOfScores))
+                                Log.d("DBG", "${diceScore.sumOfScores} in DB inserted")
+                            }
                         }
 
                         gifDrawable!!.stop()
@@ -178,6 +193,13 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
             4 -> view!!.setImageResource(R.drawable.dice4)
             5 -> view!!.setImageResource(R.drawable.dice5)
             6 -> view!!.setImageResource(R.drawable.dice6)
+        }
+    }
+
+    private fun postNewScore(currScore: Int) {
+        activity?.let { it2 ->
+            val scoreViewModel = ViewModelProviders.of(it2).get(UserNameViewModel::class.java)
+            scoreViewModel
         }
     }
 }

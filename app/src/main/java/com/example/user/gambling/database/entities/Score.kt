@@ -5,7 +5,7 @@ import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 
 @Entity
-data class Score(@PrimaryKey val id: Int,
+data class Score(@PrimaryKey (autoGenerate = true) val id: Int,
                  @ColumnInfo(name = "player_name") val playerName: String,
                  @ColumnInfo(name = "score") val score : Int) {
 }

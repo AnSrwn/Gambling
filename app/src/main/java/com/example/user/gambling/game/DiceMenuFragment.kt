@@ -3,6 +3,7 @@ package com.example.user.gambling.game
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.SharedPreferences
+import android.content.Context
 import android.os.Bundle
 import android.support.v7.preference.PreferenceManager
 import android.util.Log
@@ -48,17 +49,6 @@ class DiceMenuFragment : android.support.v4.app.Fragment() {
                 view.findViewById(R.id.buttonChangePlayersName) as Button
 
 
-        val activityContext = activity!!.applicationContext
-        val db = ScoreDB.getInstance(activityContext)!!.scoreDB()
-        var test: List<Score>? = null
-        doAsync {
-            db.insert(Score(1, "Test", 20))
-            db.insert(Score(2, "Test2", 10))
-            Log.d("DBG", "Score inserted")
-            test = db.getAllNotLive()
-            Log.d("DBG", "Got all not Live ${db.getAllNotLive()}")
-
-        }
 
         buttonSetPlayerName.setOnClickListener{
             Log.d("DBG", "Start Dialog")
@@ -69,6 +59,7 @@ class DiceMenuFragment : android.support.v4.app.Fragment() {
         buttonStartSingleplayerFragment.setOnClickListener {
             val bundle = Bundle()
             bundle.putBoolean("isMultiplayer", false)
+            bundle.putString("playerName", playerName.text.toString())
             val diceSingleplayerFragment = DiceGameFragment()
             diceSingleplayerFragment.arguments = bundle
 
@@ -87,11 +78,11 @@ class DiceMenuFragment : android.support.v4.app.Fragment() {
         }
 
         buttonShowScore.setOnClickListener {
+            val activityContext = activity!!.applicationContext
             val diceScoreListFragment = DiceScoreListFragment()
-            diceScoreListFragment.listAdapter = DiceScoreListViewAdapter(activityContext, test)
-            fragmentManager!!.beginTransaction().replace(
-                    R.id.fragmentContainer,
-                    diceScoreListFragment).addToBackStack(null).commit()
+            //diceScoreListFragment.listAdapter = DiceScoreListViewAdapter(activityContext, retrieveHighscore(activityContext))
+            fragmentManager!!.beginTransaction().replace(R.id.fragmentContainer, diceScoreListFragment)
+                    .addToBackStack(null).commit()
         }
         return view
     }
@@ -106,5 +97,21 @@ class DiceMenuFragment : android.support.v4.app.Fragment() {
                 }
             })
         }
+    }
+
+    private fun retrieveHighscore(context : Context) : List<Score>{
+        val db = ScoreDB.getInstance(context)!!.scoreDB()
+        var currEntries : List<Score>? = null
+                doAsync {
+                    currEntries = db.getAllNotLive()
+                }
+        if(currEntries!!.isEmpty()){
+            doAsync {
+                db.insert(Score(1, "Max Mustermann", 12))
+                db.insert(Score(2, "More Dummy Data", 1))
+                currEntries = db.getAllNotLive()
+            }
+        }
+        return currEntries!!
     }
 }
