@@ -140,12 +140,7 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
                             btnRestart!!.visibility = View.VISIBLE
                             textViewScore.text = getString(R.string.dice_single_score, diceScore.sumOfScores)
                             //Save score only for single player
-                            val db = ScoreDB.getInstance(context!!)!!.scoreDB()
-                            doAsync {
-                                val curSize = db.getAllNotLive().size
-                                db.insert(Score(curSize+1, currentPlayerName!! ,diceScore.sumOfScores))
-                                Log.d("DBG", "${diceScore.sumOfScores} in DB inserted")
-                            }
+                            insertScoreinDB(currentPlayerName!!, diceScore.sumOfScores)
                         }
 
                         gifDrawable!!.stop()
@@ -196,10 +191,12 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
         }
     }
 
-    private fun postNewScore(currScore: Int) {
-        activity?.let { it2 ->
-            val scoreViewModel = ViewModelProviders.of(it2).get(UserNameViewModel::class.java)
-            scoreViewModel
+    private fun insertScoreinDB(playerName : String, rolledScore: Int) {
+        val db = ScoreDB.getInstance(context!!)!!.scoreDB()
+        doAsync {
+            val curSize = db.getAllNotLive().size
+            db.insert(Score(curSize+1, playerName ,rolledScore))
+            Log.d("DBG", "${rolledScore} in DB inserted")
         }
     }
 }

@@ -52,7 +52,7 @@ class SetPlayerNameDialogFragment : DialogFragment() {
         // title by default, but your custom layout might not need it. So here you can
         // remove the dialog title, but you must call the superclass to get the Dialog.
         val dialog = super.onCreateDialog(savedInstanceState)
-        dialog.requestWindowFeature(Window.FEATURE_SWIPE_TO_DISMISS)
+        //dialog.requestWindowFeature(Window.FEATURE_SWIPE_TO_DISMISS) -> Not properly working on Huawei P10
         return dialog
     }
 
