@@ -43,6 +43,8 @@
     <string name="dice_single_score">Score: %1$d</string>
     <string name="dice_single_restart">Restart</string>
 
+    <string name="dice_single_toast_start_shaking">Start shaking!</string>
+
     <!-- DiceMultiplayer -->
     <string name="dice_multi_status_disconnected">Disconnected</string>
     <string name="dice_multi_status_connected">Connected</string>

@@ -1,7 +1,6 @@
 package com.example.user.gambling.game
 
 import android.arch.lifecycle.ViewModelProviders
-import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
@@ -15,6 +14,7 @@ import com.example.user.gambling.game.score.ScoreViewModel
 import kotlinx.android.synthetic.main.fragment_dice_singleplayer.*
 import pl.droidsonroids.gif.GifDrawable
 import pl.droidsonroids.gif.GifImageView
+import android.widget.Toast
 
 class DiceGameFragment : android.support.v4.app.Fragment() {
 
@@ -43,11 +43,8 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
         imageViewDice2!!.setImageResource(R.drawable.dice1)
 
         gifImageViewDiceCup = view.findViewById<View>(R.id.gifRollingDices) as GifImageView
-        gifImageViewDiceCup!!.setImageResource(R.drawable.gif_real_cup)
+        gifImageViewDiceCup!!.setImageResource(R.drawable.gif_set_cup)
         gifDrawable = gifImageViewDiceCup!!.drawable as GifDrawable
-
-        gifImageViewDiceCup!!.visibility = View.GONE
-        gifDrawable!!.stop()
 
         btnRestart = view.findViewById(R.id.buttonRestart)
         btnRestart!!.setOnClickListener {
@@ -56,46 +53,59 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
         btnRestart!!.visibility = View.GONE
 
         shakeListener = ShakeListener(activity!!.applicationContext)
+        startGifAnimations()
+
+        return view
+    }
+
+    override fun onResume() {
+        shakeListener!!.resume()
+        super.onResume()
+    }
+
+    override fun onPause() {
+        shakeListener!!.pause()
+        super.onPause()
+    }
+
+    private fun startGifAnimations() {
+        Handler().postDelayed({
+            setDicesVisibilty(false)
+        }, 400)
+
+        Handler().postDelayed({
+            Toast.makeText(
+                    activity,
+                    getString(R.string.dice_single_toast_start_shaking),
+                    Toast.LENGTH_SHORT).show()
+
+            startShakeListener()
+        }, 800)
+    }
+
+    private fun startShakeListener() {
         shakeListener?.setOnShakeListener(object : ShakeListener.OnShakeListener {
 
             var pickupAnimationFinished = false
-            var setAnimationFinished = false
             var setAnimationRunning = false
             var shakingAnimationFinished = false
             var shakingAnimationRunning = false
 
             override fun onShake() {
-
-                //TODO find a way, to time animations without handlers
-
-                if(!setAnimationFinished && !setAnimationRunning) {
-                    gifImageViewDiceCup!!.setImageResource(R.drawable.gif_set_cup)
-                    gifImageViewDiceCup!!.visibility = View.VISIBLE
-                    gifDrawable!!.start()
-                    setAnimationRunning = true
-
-                    Handler().postDelayed({
-                        setDicesVisibilty(false)
-                    }, 400)
-
-                    Handler().postDelayed({
-                        setAnimationFinished = true
-                    }, 1000)
-
-                } else if (!shakingAnimationFinished && !shakingAnimationRunning && setAnimationFinished) {
+                if(!shakingAnimationRunning) {
                     gifImageViewDiceCup!!.setImageResource(R.drawable.gif_real_cup)
                     gifDrawable!!.start()
                     shakingAnimationRunning = true
 
                     Handler().postDelayed({
                         shakingAnimationRunning = false
-                    }, 500)
+                        shakingAnimationFinished = true
+                    }, 1000)
                 }
             }
 
             override fun onShakeStop() {
-                if(!pickupAnimationFinished && setAnimationFinished) {
-                    shakingAnimationFinished = true
+                if(!pickupAnimationFinished && shakingAnimationFinished) {
                     pickupAnimationFinished = true
 
                     diceScore.generateNewScores()
@@ -133,23 +143,11 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
 
             override fun onResume() {
                 pickupAnimationFinished = false
-                setAnimationFinished = false
                 setAnimationRunning = false
                 shakingAnimationFinished = false
                 shakingAnimationRunning = false
             }
         })
-        return view
-    }
-
-    override fun onResume() {
-        shakeListener!!.resume()
-        super.onResume()
-    }
-
-    override fun onPause() {
-        shakeListener!!.pause()
-        super.onPause()
     }
 
     private fun restartGameFragment() {
@@ -161,7 +159,7 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
                 .commit()
     }
 
-    fun setDicesVisibilty(setVisible: Boolean) {
+    private fun setDicesVisibilty(setVisible: Boolean) {
         if(setVisible) {
             imageViewDice1!!.visibility = View.VISIBLE
             imageViewDice2!!.visibility = View.VISIBLE
@@ -172,7 +170,7 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
         }
     }
 
-    fun changeDice(view: ImageView?, score: Int) {
+    private fun changeDice(view: ImageView?, score: Int) {
         when (score) {
             1 -> view!!.setImageResource(R.drawable.dice1)
             2 -> view!!.setImageResource(R.drawable.dice2)

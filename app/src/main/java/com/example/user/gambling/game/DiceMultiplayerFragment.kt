@@ -6,10 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.RelativeLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import com.example.user.gambling.R
 import com.example.user.gambling.connection.Connection
 import com.example.user.gambling.connection.PermissionHandler
@@ -34,7 +31,7 @@ class DiceMultiplayerFragment : android.support.v4.app.Fragment() {
     private var opponentScoreText: TextView? = null
     private var totalScoreText: TextView? = null
 
-    private var loadingPanel: RelativeLayout? = null
+    private var loadingPanel: FrameLayout? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -45,15 +42,14 @@ class DiceMultiplayerFragment : android.support.v4.app.Fragment() {
         totalScoreText = view.findViewById(R.id.textViewTotalScore)
         findOpponentButton = view.findViewById(R.id.buttonConnFindOpponent)
         btnContinueGame = view.findViewById(R.id.buttonContinueMultiGame)
+        loadingPanel = view.findViewById(R.id.waitForOpponentLoadingPanel)
 
         setViewsVisibility(false)
 
-        loadingPanel = view.findViewById(R.id.waitForOpponentLoadingPanel)
-        loadingPanel!!.visibility = View.GONE
-
         btnContinueGame!!.setOnClickListener {
+            /*
             myScore = 0
-            opponentScore = 0
+            opponentScore = 0 */
 
             startGameFragment()
             btnContinueGame!!.visibility = View.GONE
@@ -120,6 +116,9 @@ class DiceMultiplayerFragment : android.support.v4.app.Fragment() {
                         opponentTotalScore,
                         connection!!.opponentName)
 
+                myScore = 0
+                opponentScore = 0
+
                 setViewsVisibility(true)
             }
         }
@@ -137,8 +136,6 @@ class DiceMultiplayerFragment : android.support.v4.app.Fragment() {
                 connection!!.stopOpponentSearch()
                 connection!!.opponentEndpointId = endpointId
 
-                findOpponentButton!!.text = getString(R.string.dice_multi_status_connected)
-                findOpponentButton!!.isEnabled = false
                 findOpponentButton!!.visibility = View.GONE
 
                 startGameFragment()
@@ -207,8 +204,9 @@ class DiceMultiplayerFragment : android.support.v4.app.Fragment() {
     }
 
     private fun startGameFragment() {
+        /*
         myScore = 0
-        opponentScore = 0
+        opponentScore = 0 */
 
         val diceGameFragment = DiceGameFragment()
 

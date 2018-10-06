@@ -67,7 +67,7 @@ class ShakeListener(context: Context) : SensorEventListener {
                     if (speed > shakeThreshold) {
                         shakeListener?.onShake()
                         lastShake = curTime
-                    } else if (curTime - lastShake > 400) {
+                    } else if (curTime - lastShake > 1000) {
                         shakeListener?.onShakeStop()
                     }
 

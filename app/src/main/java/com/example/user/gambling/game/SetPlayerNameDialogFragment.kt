@@ -33,7 +33,7 @@ class SetPlayerNameDialogFragment : DialogFragment() {
             } else {
                 updateObserver(newPlayerName)
                 dialog.dismiss()
-                Toast.makeText(context, "Set $newPlayerName as new player name.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Hello $newPlayerName!", Toast.LENGTH_SHORT).show()
             }
         }
         return view

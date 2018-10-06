@@ -1,82 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".game.DiceMultiplayerFragment">
 
-    <RelativeLayout
+    <FrameLayout
         android:id="@+id/waitForOpponentLoadingPanel"
+        android:background="#ffffff"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center" >
+        android:elevation="10dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/dice_multi_waiting"/>
-    </RelativeLayout>
+            android:text="@string/dice_multi_waiting"
+            android:indeterminate="true"
+            android:layout_gravity="center"/>
+    </FrameLayout>
 
     <Button
         android:id="@+id/buttonConnFindOpponent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginStart="139dp"
-        android:layout_marginTop="127dp"
-        android:layout_marginEnd="139dp"
         android:text="@string/dice_multi_find_opponent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewOpponentScore" />
+        android:elevation="2dp"/>
 
     <TextView
         android:id="@+id/textViewMyScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="163dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="163dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.508"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTotalScore" />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="100dp" />
 
     <TextView
         android:id="@+id/textViewOpponentScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="163dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="163dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewMyScore" />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="120dp"/>
 
     <TextView
         android:id="@+id/textViewTotalScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="163dp"
-        android:layout_marginTop="53dp"
-        android:layout_marginEnd="163dp"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"
+        android:textSize="20sp"/>
 
     <Button
         android:id="@+id/buttonContinueMultiGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="147dp"
-        android:layout_marginTop="45dp"
-        android:layout_marginEnd="149dp"
+        android:layout_gravity="center"
         android:text="@string/dice_multi_continue_game"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonConnFindOpponent" />
-
-</android.support.constraint.ConstraintLayout>
+        android:elevation="2dp"/>
+</FrameLayout>
