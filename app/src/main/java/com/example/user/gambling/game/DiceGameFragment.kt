@@ -1,5 +1,6 @@
 package com.example.user.gambling.game
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.os.Handler
@@ -37,6 +38,9 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
 
     private var btnRestart: Button? = null
 
+    private val diceScore = DiceScore(2)
+    private var diceScorePrevRound = 0
+
     private var isMultiplayer = false
     private var currentPlayerName : String? = null
 
@@ -48,6 +52,8 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
         currentPlayerName = arguments!!.getString("playerName")
 
         val view = inflater.inflate(R.layout.fragment_dice_singleplayer, container, false)
+
+        registerForScoreUpdates()
 
         imageViewDice1 = view.findViewById<View>(R.id.imageViewFirstDice) as ImageView
         imageViewDice1!!.setImageResource(R.drawable.dice1)
@@ -130,11 +136,9 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
                     gifDrawable!!.start()
 
                     Handler().postDelayed({
+
                         if(isMultiplayer) {
-                            activity?.let {
-                                val scoreViewModel = ViewModelProviders.of(it).get(ScoreViewModel::class.java)
-                                scoreViewModel.myScore.postValue(diceScore.sumOfScores)
-                            }
+                            updateDiceScore(diceScore.sumOfScores)
 
                             val gameFragment = fragmentManager!!.findFragmentByTag("gameFragment")
                             fragmentManager!!.beginTransaction().remove(gameFragment!!).commit()
@@ -142,10 +146,29 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
                             val multiplayerFragment = fragmentManager!!.findFragmentByTag("multiplayerFragment")
                             fragmentManager!!.beginTransaction().show(multiplayerFragment!!).commit()
                         } else {
-                            btnRestart!!.visibility = View.VISIBLE
-                            textViewScore.text = getString(R.string.dice_single_score, diceScore.sumOfScores)
-                            //Save score only for single player
-                            insertScoreinDB(currentPlayerName!!, diceScore.sumOfScores)
+                            val newScore = diceScore.sumOfScores + diceScorePrevRound
+
+                            textViewScore.text = getString(R.string.dice_single_score, newScore)
+
+                            if(diceScore.scoresOfDices[0] == diceScore.scoresOfDices[1]) {
+                                updateDiceScore(newScore)
+
+                                Toast.makeText(
+                                        activity,
+                                        getString(R.string.dice_single_extra_round),
+                                        Toast.LENGTH_SHORT).show()
+
+                                Handler().postDelayed({
+                                    restartGameFragment()
+                                }, 1500)
+
+                            } else {
+                                btnRestart!!.visibility = View.VISIBLE
+                                updateDiceScore(0)
+
+                                //Save score only for single player
+                                insertScoreinDB(currentPlayerName!!, newScore)
+                            }
                         }
 
                         gifDrawable!!.stop()
@@ -217,6 +240,26 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
                 db.insert(Score(curSize + 1, playerName, rolledScore))
             }
             Log.d("DBG", "$rolledScore in DB inserted")
+            db.insert(Score(curSize+1, playerName ,rolledScore))
+            Log.d("DBG", "$rolledScore in DB inserted")
+        }
+    }
+
+    private fun registerForScoreUpdates() {
+        activity?.let { fragmentActivity ->
+            val sharedViewModel = ViewModelProviders.of(fragmentActivity).get(ScoreViewModel::class.java)
+            sharedViewModel.myScore.observe(this, Observer { i ->
+                i?.let {
+                    diceScorePrevRound = it
+                }
+            })
+        }
+    }
+
+    private fun updateDiceScore(score: Int) {
+        activity?.let {
+            val scoreViewModel = ViewModelProviders.of(it).get(ScoreViewModel::class.java)
+            scoreViewModel.myScore.postValue(score)
         }
     }
 }
