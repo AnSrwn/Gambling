@@ -2,12 +2,15 @@ package com.example.user.gambling.game
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.support.v7.preference.PreferenceManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import com.example.user.gambling.R
 import com.example.user.gambling.database.databases.ScoreDB
 import com.example.user.gambling.database.entities.Score
@@ -19,13 +22,22 @@ import org.jetbrains.anko.doAsync
 
 class DiceMenuFragment : android.support.v4.app.Fragment() {
 
+    private var prefUsername: SharedPreferences? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
+        val view = inflater.inflate(R.layout.fragment_dice_menu, container, false)
+
+        prefUsername = PreferenceManager.getDefaultSharedPreferences(activity!!.applicationContext)
+
+        val usernameText = view.findViewById(R.id.playerName) as TextView
+        usernameText.text = prefUsername!!.getString(
+                "username",
+                getString(R.string.dice_menu_player_name))
+
         registerForPlayerNameUpdates()
 
-        val view = inflater.inflate(R.layout.fragment_dice_menu, container, false)
         val buttonStartSingleplayerFragment =
                 view.findViewById(R.id.buttonStartSingleplayerFragment) as Button
         val buttonStartMultiplayerFragment =
@@ -90,6 +102,7 @@ class DiceMenuFragment : android.support.v4.app.Fragment() {
             sharedViewModel.userName.observe(this, Observer { i ->
                 i?.let {
                     playerName.text = it
+                    prefUsername!!.edit().putString("username", it).apply()
                 }
             })
         }
