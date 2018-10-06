@@ -9,6 +9,7 @@ import android.support.v7.preference.PreferenceManager
 import android.view.Menu
 import com.example.user.gambling.game.DiceMenuFragment
 import android.view.MenuItem
+import com.example.user.gambling.game.DiceMultiplayerFragment
 import com.example.user.gambling.settings.SettingsActivity
 import com.example.user.gambling.utility.Utils
 import kotlinx.android.synthetic.main.activity_main.*
@@ -42,7 +43,11 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             R.id.help -> {
-                //TODO no help implemented
+                val helpFragment = HelpFragment()
+                supportFragmentManager!!.beginTransaction().replace(
+                        R.id.fragmentContainer,
+                        helpFragment,
+                        "helpFragment").addToBackStack(null).commit()
                 true
             }
             else -> super.onOptionsItemSelected(item)

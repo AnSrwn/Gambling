@@ -27,9 +27,6 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
         private const val MAX_DATABASE_ENTRIES = 10
     }
 
-    private val diceScore = DiceScore(2)
-
-
     private var shakeListener: ShakeListener? = null
     private var gifImageViewDiceCup: GifImageView? = null
     private var gifDrawable: GifDrawable? = null
