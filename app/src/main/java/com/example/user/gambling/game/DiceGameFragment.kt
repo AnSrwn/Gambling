@@ -118,7 +118,7 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
                     shakingSoundrunning = true
                 }
                 if(!shakingAnimationRunning) {
-                    gifImageViewDiceCup!!.setImageResource(R.drawable.gif_real_cup)
+                    gifImageViewDiceCup!!.setImageResource(R.drawable.gif_dice_shake)
                     gifDrawable!!.start()
                     shakingAnimationRunning = true
 
