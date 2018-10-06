@@ -169,10 +169,25 @@ class DiceMultiplayerFragment : android.support.v4.app.Fragment() {
     }
 
     private fun setTotalScore(myScore: Int, opponentScore: Int) {
-        if(myScore > opponentScore) {
-            myTotalScore++
-        } else {
-            opponentTotalScore++
+        when {
+            myScore > opponentScore -> {
+                myTotalScore++
+                Toast.makeText(
+                        activity,
+                        getString(R.string.dice_multi_toast_round_won),
+                        Toast.LENGTH_SHORT).show()
+            }
+            opponentScore > myScore -> {
+                opponentTotalScore++
+                Toast.makeText(
+                        activity,
+                        getString(R.string.dice_multi_toast_round_lost),
+                        Toast.LENGTH_SHORT).show()
+            }
+            else -> Toast.makeText(
+                    activity,
+                    getString(R.string.dice_multi_toast_round_tie),
+                    Toast.LENGTH_SHORT).show()
         }
     }
 
