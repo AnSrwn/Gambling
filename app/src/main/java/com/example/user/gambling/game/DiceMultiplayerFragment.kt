@@ -39,7 +39,6 @@ class DiceMultiplayerFragment : android.support.v4.app.Fragment() {
 
         setAllViews(view)
 
-        loadingPanel!!.visibility = View.GONE
         setViewsVisibility(false)
 
         btnContinueGame!!.setOnClickListener {
@@ -253,7 +252,9 @@ class DiceMultiplayerFragment : android.support.v4.app.Fragment() {
                 i?.let {
                     myScore = it
                     connection?.sendScore(myScore)
-                    loadingPanel!!.visibility = View.VISIBLE
+                    if(connection != null) {
+                        loadingPanel!!.visibility = View.VISIBLE
+                    }
                 }
             })
         }
