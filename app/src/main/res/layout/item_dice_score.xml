@@ -1,31 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/itemDiceScore"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="3"
-        android:paddingBottom="15dp"
-        android:paddingTop="15dp"
-        android:orientation="horizontal">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/itemDiceScore"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingTop="15dp"
+    android:paddingBottom="15dp">
 
         <TextView
             android:id="@+id/playersNames"
-            android:layout_width="189dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="" />
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="17sp"/>
 
         <TextView
             android:id="@+id/playersScores"
-            android:layout_width="15dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="" />
+            android:gravity="center"/>
 
     </LinearLayout>
-
-</android.support.constraint.ConstraintLayout>

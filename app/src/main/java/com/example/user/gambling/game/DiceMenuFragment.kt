@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import com.example.user.gambling.R
 import com.example.user.gambling.game.score.DiceScoreListFragment
@@ -40,7 +41,7 @@ class DiceMenuFragment : android.support.v4.app.Fragment() {
         val buttonShowScore =
                 view.findViewById(R.id.buttonShowScore) as Button
         val buttonSetPlayerName =
-                view.findViewById(R.id.buttonChangePlayersName) as Button
+                view.findViewById(R.id.buttonChangePlayersName) as ImageButton
 
 
 

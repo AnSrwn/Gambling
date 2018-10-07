@@ -6,6 +6,7 @@
          dice_multi = Dice Multiplayer
          dice_menu = Dice Menu
          help = Help
+         dice_score_list = Dice Score List
          -->
 
     <string name="app_name">Gambling</string>
@@ -17,6 +18,7 @@
     <string name="dice_menu_player_name">Name Placeholder</string>
     <string name="dice_menu_change_player_name">Change Name</string>
 
+    <string name="dice_menu_description_edit_username">Edit username</string>
 
     <string name="dialog_player_name">Username</string>
     <string name="dialog_confirm">OK</string>
@@ -86,5 +88,9 @@
         back button or turns off the display, you are disconnected and you are not able to continue
         the game.
     </string>
+
+    <!-- Dice Score List -->
+    <string name="dice_score_list_username">Username</string>
+    <string name="dice_score_list_score">Score</string>
 
 </resources>

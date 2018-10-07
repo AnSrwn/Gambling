@@ -37,20 +37,12 @@ class DiceMultiplayerFragment : android.support.v4.app.Fragment() {
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_dice_multiplayer, container, false)
 
-        yourScoreText = view.findViewById(R.id.textViewMyScore)
-        opponentScoreText = view.findViewById(R.id.textViewOpponentScore)
-        totalScoreText = view.findViewById(R.id.textViewTotalScore)
-        findOpponentButton = view.findViewById(R.id.buttonConnFindOpponent)
-        btnContinueGame = view.findViewById(R.id.buttonContinueMultiGame)
-        loadingPanel = view.findViewById(R.id.waitForOpponentLoadingPanel)
+        setAllViews(view)
 
+        loadingPanel!!.visibility = View.GONE
         setViewsVisibility(false)
 
         btnContinueGame!!.setOnClickListener {
-            /*
-            myScore = 0
-            opponentScore = 0 */
-
             startGameFragment()
             btnContinueGame!!.visibility = View.GONE
         }
@@ -148,24 +140,24 @@ class DiceMultiplayerFragment : android.support.v4.app.Fragment() {
         }
 
         override fun onDisconnected(endpointId: String) {
-            //in case you get disconnected in the middle of the game, gameFragment must be removed
-            // and multiplayerFramgent resetted
-
             resetDiceMultiplayerFragment()
-
-            val gameFragment = fragmentManager!!.findFragmentByTag("gameFragment")
-            if(gameFragment != null) {
-                fragmentManager!!.beginTransaction().remove(gameFragment).commit()
-            }
-
-            val multiplayerFragment = fragmentManager!!.findFragmentByTag("multiplayerFragment")
-            fragmentManager!!.beginTransaction().show(multiplayerFragment!!).commit()
+            showMultiplayerFragment()
 
             Toast.makeText(
                     activity,
                     getString(R.string.dice_multi_toast_disconnected),
                     Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun showMultiplayerFragment() {
+        val gameFragment = fragmentManager!!.findFragmentByTag("gameFragment")
+        if (gameFragment != null) {
+            fragmentManager!!.beginTransaction().remove(gameFragment).commit()
+        }
+
+        val multiplayerFragment = fragmentManager!!.findFragmentByTag("multiplayerFragment")
+        fragmentManager!!.beginTransaction().show(multiplayerFragment!!).commit()
     }
 
     private fun setTotalScore(myScore: Int, opponentScore: Int) {
@@ -189,6 +181,15 @@ class DiceMultiplayerFragment : android.support.v4.app.Fragment() {
                     getString(R.string.dice_multi_toast_round_tie),
                     Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun setAllViews(view: View) {
+        yourScoreText = view.findViewById(R.id.textViewMyScore)
+        opponentScoreText = view.findViewById(R.id.textViewOpponentScore)
+        totalScoreText = view.findViewById(R.id.textViewTotalScore)
+        findOpponentButton = view.findViewById(R.id.buttonConnFindOpponent)
+        btnContinueGame = view.findViewById(R.id.buttonContinueMultiGame)
+        loadingPanel = view.findViewById(R.id.waitForOpponentLoadingPanel)
     }
 
     private fun setViewsVisibility(visible: Boolean) {
@@ -219,10 +220,6 @@ class DiceMultiplayerFragment : android.support.v4.app.Fragment() {
     }
 
     private fun startGameFragment() {
-        /*
-        myScore = 0
-        opponentScore = 0 */
-
         val diceGameFragment = DiceGameFragment()
 
         val bundle = Bundle()
