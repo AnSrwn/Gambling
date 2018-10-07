@@ -41,28 +41,17 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
     private var isMultiplayer = false
     private var currentPlayerName : String? = null
 
-    private var audioPlayer: AudioPlayer? = null
-
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+
+        val view = inflater.inflate(R.layout.fragment_dice_singleplayer, container, false)
 
         isMultiplayer = arguments!!.getBoolean("isMultiplayer")
         currentPlayerName = arguments!!.getString("playerName")
 
-        val view = inflater.inflate(R.layout.fragment_dice_singleplayer, container, false)
-
         registerForScoreUpdates()
 
-        imageViewDice1 = view.findViewById<View>(R.id.imageViewFirstDice) as ImageView
-        imageViewDice1!!.setImageResource(R.drawable.dice1)
-
-        imageViewDice2 = view.findViewById<View>(R.id.imageViewSecondDice) as ImageView
-        imageViewDice2!!.setImageResource(R.drawable.dice1)
-
-        gifImageViewDiceCup = view.findViewById<View>(R.id.gifRollingDices) as GifImageView
-        gifImageViewDiceCup!!.setImageResource(R.drawable.gif_set_cup)
-        gifDrawable = gifImageViewDiceCup!!.drawable as GifDrawable
+        setImageResources(view)
 
         btnRestart = view.findViewById(R.id.buttonRestart)
         btnRestart!!.setOnClickListener {
@@ -70,7 +59,7 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
         }
         btnRestart!!.visibility = View.GONE
 
-        audioPlayer = AudioPlayer(context!!)
+
 
         shakeListener = ShakeListener(activity!!.applicationContext)
         startGifAnimations()
@@ -104,18 +93,20 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
     }
 
     private fun startShakeListener() {
+        val audioPlayer = AudioPlayer(context!!)
+
         shakeListener?.setOnShakeListener(object : ShakeListener.OnShakeListener {
 
             var pickupAnimationFinished = false
             var setAnimationRunning = false
             var shakingAnimationFinished = false
             var shakingAnimationRunning = false
-            var shakingSoundrunning = false
+            var shakingSoundRunning = false
 
             override fun onShake() {
-                if(!shakingSoundrunning) {
-                    audioPlayer!!.startDiceShakeSound()
-                    shakingSoundrunning = true
+                if(!shakingSoundRunning) {
+                    audioPlayer.startDiceShakeSound()
+                    shakingSoundRunning = true
                 }
                 if(!shakingAnimationRunning) {
                     gifImageViewDiceCup!!.setImageResource(R.drawable.gif_dice_shake)
@@ -133,14 +124,14 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
                 if(!pickupAnimationFinished && shakingAnimationFinished) {
                     pickupAnimationFinished = true
 
-                    audioPlayer!!.stopDiceShakeSound()
+                    audioPlayer.stopDiceShakeSound()
 
                     diceScore.generateNewScores()
                     changeDice(imageViewDice1!!, diceScore.scoresOfDices[0])
                     changeDice(imageViewDice2!!, diceScore.scoresOfDices[1])
                     setDicesVisibilty(true)
 
-                    audioPlayer!!.playDiceRollSound()
+                    audioPlayer.playDiceRollSound()
 
                     gifImageViewDiceCup!!.setImageResource(R.drawable.gif_pickup_cup)
                     gifDrawable!!.start()
@@ -149,17 +140,13 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
 
                         if(isMultiplayer) {
                             updateDiceScore(diceScore.sumOfScores)
+                            returnToMultiplayerFragment()
 
-                            val gameFragment = fragmentManager!!.findFragmentByTag("gameFragment")
-                            fragmentManager!!.beginTransaction().remove(gameFragment!!).commit()
-
-                            val multiplayerFragment = fragmentManager!!.findFragmentByTag("multiplayerFragment")
-                            fragmentManager!!.beginTransaction().show(multiplayerFragment!!).commit()
                         } else {
                             val newScore = diceScore.sumOfScores + diceScorePrevRound
-
                             textViewScore.text = getString(R.string.dice_single_score, newScore)
 
+                            //check if there is a double
                             if(diceScore.scoresOfDices[0] == diceScore.scoresOfDices[1]) {
                                 updateDiceScore(newScore)
 
@@ -196,6 +183,26 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
                 shakingAnimationRunning = false
             }
         })
+    }
+
+    private fun setImageResources(view: View) {
+        imageViewDice1 = view.findViewById<View>(R.id.imageViewFirstDice) as ImageView
+        imageViewDice1!!.setImageResource(R.drawable.dice1)
+
+        imageViewDice2 = view.findViewById<View>(R.id.imageViewSecondDice) as ImageView
+        imageViewDice2!!.setImageResource(R.drawable.dice1)
+
+        gifImageViewDiceCup = view.findViewById<View>(R.id.gifRollingDices) as GifImageView
+        gifImageViewDiceCup!!.setImageResource(R.drawable.gif_set_cup)
+        gifDrawable = gifImageViewDiceCup!!.drawable as GifDrawable
+    }
+
+    private fun returnToMultiplayerFragment() {
+        val gameFragment = fragmentManager!!.findFragmentByTag("gameFragment")
+        fragmentManager!!.beginTransaction().remove(gameFragment!!).commit()
+
+        val multiplayerFragment = fragmentManager!!.findFragmentByTag("multiplayerFragment")
+        fragmentManager!!.beginTransaction().show(multiplayerFragment!!).commit()
     }
 
     private fun restartGameFragment() {
