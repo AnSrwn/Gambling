@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".game.DiceGameFragment">
+
+    <TextView
+        android:id="@+id/textViewScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:layout_gravity="center|top"
+        android:textSize="30sp"/>
+
+    <ImageView
+        android:id="@+id/imageViewFirstDice"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginStart="100dp"
+        android:layout_gravity="center|start"
+        android:contentDescription="@string/dice_single_imageView_description" />
+
+    <ImageView
+        android:id="@+id/imageViewSecondDice"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginEnd="100dp"
+        android:layout_gravity="center|end"
+        android:contentDescription="@string/dice_single_imageView_description" />
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/gifRollingDices"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center"/>
+
+    <Button
+        android:id="@+id/buttonRestart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="25dp"
+        android:layout_gravity="center|bottom"
+        android:text="@string/dice_single_restart"/>
+
+
+</FrameLayout>

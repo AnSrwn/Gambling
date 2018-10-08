@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="pref_bc_entries">
+        <item>white</item>
+        <item>red</item>
+        <item>blue</item>
+        <item>green</item>
+        <item>yellow</item>
+    </string-array>
+
+    <string-array name="pref_bc_values">
+        <item>white</item>
+        <item>red</item>
+        <item>blue</item>
+        <item>green</item>
+        <item>yellow</item>
+    </string-array>
+
+    <string-array name="pref_theme_entries">
+        <item>light</item>
+        <item>blue</item>
+        <item>dark</item>
+    </string-array>
+
+    <string-array name="pref_theme_values">
+        <item>light</item>
+        <item>blue</item>
+        <item>dark</item>
+    </string-array>
+
+</resources>

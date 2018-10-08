@@ -1,3 +1,96 @@
 <resources>
+    <!-- btn = Button
+         opt = Options Menu
+         pref = Preferences
+         dice_single = Dice Singleplayer
+         dice_multi = Dice Multiplayer
+         dice_menu = Dice Menu
+         help = Help
+         dice_score_list = Dice Score List
+         -->
+
     <string name="app_name">Gambling</string>
+
+    <!-- DiceMenu -->
+    <string name="dice_menu_roll_the_dice">Roll the dice!</string>
+    <string name="dice_menu_multiplayer">Multiplayer</string>
+    <string name="dice_menu_show_score">Show Score</string>
+    <string name="dice_menu_player_name">Name Placeholder</string>
+    <string name="dice_menu_change_player_name">Change Name</string>
+
+    <string name="dice_menu_description_edit_username">Edit username</string>
+
+    <string name="dialog_player_name">Username</string>
+    <string name="dialog_confirm">OK</string>
+    <string name="dialog_cancel">Cancel</string>
+
+    <!-- Options Menu -->
+    <string name="opt_pref">Settings</string>
+    <string name="opt_help">Help</string>
+
+    <!-- Preference -->
+    <string name="pref_appearance">Appearance</string>
+
+    <!-- Background Color -->
+    <string name="pref_bc_def">white</string>
+    <string name="pref_bc_key">backGroundColorList</string>
+    <string name="pref_bc_text">Background Color</string>
+
+    <!-- Theme -->
+    <string name="pref_theme_def">light</string>
+    <string name="pref_theme_key">themeList</string>
+    <string name="pref_theme_text">Theme</string>
+
+    <!-- DiceSingleplayer -->
+    <string name="dice_single_imageView_description">Result of the dice shake</string>
+    <string name="dice_single_score">Score: %1$d</string>
+    <string name="dice_single_restart">Restart</string>
+    <string name="dice_single_extra_round">Have an extra round :)</string>
+
+    <string name="dice_single_toast_start_shaking">Start shaking!</string>
+
+    <!-- DiceMultiplayer -->
+    <string name="dice_multi_status_disconnected">Disconnected</string>
+    <string name="dice_multi_status_connected">Connected</string>
+    <string name="dice_multi_status_searching">Searching&#8230;</string>
+
+    <string name="dice_multi_your_score">You: %1$d</string>
+    <string name="dice_multi_opponent_score">Opponent: %1$d</string>
+    <string name="dice_multi_total_score">You   %1$d : %2$d   %3$s</string>
+
+    <string name="dice_multi_toast_permissions_denied">Permission denied</string>
+    <string name="dice_multi_toast_disconnected">Disconnected</string>
+    <string name="dice_multi_toast_conn_failed">Connection failed</string>
+    <string name="dice_multi_toast_round_won">You won this round!</string>
+    <string name="dice_multi_toast_round_lost">You lost this round :(</string>
+    <string name="dice_multi_toast_round_tie">Tie!</string>
+
+    <string name="dice_multi_find_opponent">Find Opponent</string>
+    <string name="dice_multi_continue_game">Continue Game</string>
+    <string name="dice_multi_send_score">Send score</string>
+    <string name="dice_multi_waiting">Waiting for Opponent&#8230;</string>
+
+    <!-- Help -->
+    <string name="help_singleplayer">Singleplayer</string>
+    <string name="help_multiplayer">Multiplayer</string>
+    <string name="help_singleplayer_content">
+        When you enter the Singleplayer mode, you see two dices. After the dice cup covers them up,
+        you can shake the cup, by shaking your phone. As soon as you stop shaking, the cup uncovers
+        the dices again. \n\nIf you throw doubles, you have the possibility to shake the cup again.
+        All scores are added together at the end of the game.
+    </string>
+    <string name="help_multiplayer_content">To play the Multiplayer, your opponent needs to be right
+        next to you. The game is using Bluetooth and/or WiFi to connect to your opponent. For this,
+        you will be asked for permission. After accepting, press the button <i>Find Opponent</i>. When
+        you found your opponent, the game directly starts. \n\nLike in the Singleplayer mode, you
+        need to shake your phone to get a score. After both of you played, the results are shown.
+        You can now continue your game by pressing <i>Continue</i>. If you or your opponent presses the
+        back button or turns off the display, you are disconnected and you are not able to continue
+        the game.
+    </string>
+
+    <!-- Dice Score List -->
+    <string name="dice_score_list_username">Username</string>
+    <string name="dice_score_list_score">Score</string>
+
 </resources>
