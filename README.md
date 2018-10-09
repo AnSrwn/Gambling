@@ -2,7 +2,7 @@
 <p align="justify">
 This dice gambling app aims at anyone who wants to play a dice game, but does not have real dices. It is especially usefull while travelling with a friend. You can pass your time playing together, even if you have no Internet.
 The design of the app is supposed to be customizable, so that the user can feel as comfortable as possible while gaming.
-</p>
+
 
 Features:
 * Singleplayer:
@@ -30,6 +30,8 @@ Features:
     <b>gallery</b> or you can take a <b>new photo</b>.
   * The selected settings are stored in <b>shared preferences</b>.
   
+<br><br>
+  
 Future objectives:
 * Choosing the amount of dices.
 * Multiplayer with more than two players.
@@ -42,3 +44,5 @@ Future objectives:
 <br><br>
 
 If you have any suggestions for features or want to report a bug, please make a new issue. We will take care about it :)
+
+</p>
