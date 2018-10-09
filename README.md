@@ -1,6 +1,9 @@
 # Gambling
 
-A dice gambling app which contains the following features:
+This dice gambling app aims at anyone who wants to play a dice game, but does not have real dices. It is especially usefull while travelling with a friend. You can pass your time playing together, even if you have no Internet.
+The design of the app is supposed to be customizable, so that the user can feel as comfortable as possible while gaming.
+
+Features:
 * Singleplayer:
   * <b>GIF animations</b> to cover/uncover two dices with a dice cup and to shake this cup.
   * Shaking the phone is recognized with the internal <b>acceleromter sensor</b>.
@@ -34,3 +37,6 @@ Future objectives:
 * Improve animations. Considering using something else than GIFs, because they use a lot
   of memory space and their performance is not optimal.
 * Improve the design of the app (buttons, text style,...).
+
+
+If you have any suggestions for features or want to report a bug, please make a new issue. We will take care about it :)
