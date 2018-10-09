@@ -3,6 +3,7 @@
 This dice gambling app aims at anyone who wants to play a dice game, but does not have real dices. It is especially usefull while travelling with a friend. You can pass your time playing together, even if you have no Internet.
 The design of the app is supposed to be customizable, so that the user can feel as comfortable as possible while gaming.
 
+<br><br>
 
 Features:
 * Singleplayer:
