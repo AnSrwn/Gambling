@@ -1,7 +1,8 @@
 # Gambling
-
+<p align="justify">
 This dice gambling app aims at anyone who wants to play a dice game, but does not have real dices. It is especially usefull while travelling with a friend. You can pass your time playing together, even if you have no Internet.
 The design of the app is supposed to be customizable, so that the user can feel as comfortable as possible while gaming.
+</p>
 
 Features:
 * Singleplayer:
@@ -38,5 +39,6 @@ Future objectives:
   of memory space and their performance is not optimal.
 * Improve the design of the app (buttons, text style,...).
 
+<br><br>
 
 If you have any suggestions for features or want to report a bug, please make a new issue. We will take care about it :)
