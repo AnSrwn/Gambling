@@ -9,18 +9,12 @@ import android.widget.TextView
 import com.example.user.gambling.R
 import com.example.user.gambling.database.entities.Score
 
-class DiceScoreListViewAdapter(private val context: Context, private val scores: List<Score>?):BaseAdapter(){
+class DiceScoreListViewAdapter(context: Context, private val scores: List<Score>?):BaseAdapter(){
 
     private val inflater: LayoutInflater
             = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        //TODO Maybe replace it with View Holder, whatever?
-       /* val holder = RecyclerView.ViewHolder(
-                convertView.findViewById(R.id.playerName),
-                convertView.findViewById(R.id.playersScore)
-        )
-        convertView.tag = holder*/
         val rowView = inflater.inflate(R.layout.item_dice_score, parent, false)
         val thisScore = scores!![position]
         var tv = rowView.findViewById(R.id.playersNames) as TextView

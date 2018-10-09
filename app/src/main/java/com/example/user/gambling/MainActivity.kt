@@ -9,11 +9,9 @@ import android.support.v7.preference.PreferenceManager
 import android.view.Menu
 import com.example.user.gambling.game.DiceMenuFragment
 import android.view.MenuItem
-import com.example.user.gambling.game.DiceMultiplayerFragment
 import com.example.user.gambling.settings.SettingsActivity
 import com.example.user.gambling.utility.Utils
 import kotlinx.android.synthetic.main.activity_main.*
-import org.jetbrains.anko.doAsync
 
 class MainActivity : AppCompatActivity() {
 
@@ -68,7 +66,6 @@ class MainActivity : AppCompatActivity() {
         val sp = PreferenceManager.getDefaultSharedPreferences(this)
         val color = sp.getString("pref_bc_key", "white")
         fragmentContainer.setBackgroundColor(Color.parseColor(color))
-        //TODO Some other preferences stuff
     }
 
     private fun reloadTheme(){
