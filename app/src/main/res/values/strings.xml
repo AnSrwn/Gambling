@@ -41,6 +41,14 @@
     <string name="pref_theme_key">themeList</string>
     <string name="pref_theme_text">Theme</string>
 
+    <!-- Background Image -->
+    <string name="pref_bc_pic_text">Background Image</string>
+    <string name="pref_bc_pic_description">Take a picture or use a photo from the gallery as background!</string>
+
+    <string name="dialog_take_picture">Take photo</string>
+    <string name="dialog_import_from_gallery">Choose photo from phone</string>
+
+
     <!-- DiceSingleplayer -->
     <string name="dice_single_imageView_description">Result of the dice shake</string>
     <string name="dice_single_score">Score: %1$d</string>

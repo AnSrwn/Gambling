@@ -19,5 +19,11 @@
             android:entries="@array/pref_theme_entries"
             android:entryValues="@array/pref_theme_values"
             android:title="@string/pref_theme_text" />
+
+        <PreferenceScreen
+            android:key="pref_bc_pic_key"
+            android:title="@string/pref_bc_pic_text"
+            android:summary="@string/pref_bc_pic_description">
+        </PreferenceScreen>
     </PreferenceCategory>
 </PreferenceScreen>

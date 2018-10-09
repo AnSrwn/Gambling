@@ -9,11 +9,23 @@ import android.support.v7.preference.PreferenceManager
 import android.view.Menu
 import com.example.user.gambling.game.DiceMenuFragment
 import android.view.MenuItem
-import com.example.user.gambling.game.DiceMultiplayerFragment
 import com.example.user.gambling.settings.SettingsActivity
 import com.example.user.gambling.utility.Utils
 import kotlinx.android.synthetic.main.activity_main.*
-import org.jetbrains.anko.doAsync
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
+import android.os.Environment
+import android.support.v4.content.ContextCompat
+import android.util.Base64
+import android.util.Log
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestOptions
+import com.jerem.imagebackground.DrawableViewBackgroundTarget
+import java.io.ByteArrayOutputStream
+import java.io.File
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -66,8 +78,20 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadPreferences(){
         val sp = PreferenceManager.getDefaultSharedPreferences(this)
-        val color = sp.getString("pref_bc_key", "white")
-        fragmentContainer.setBackgroundColor(Color.parseColor(color))
+        //val color = sp.getString("pref_bc_key", "white")
+        val picturePath = sp.getString("imageURL", "grass.png")
+        //val imageBitmap = BitmapFactory.decodeFile(picturePath)
+        //val viewTarget = DrawableViewBackgroundTarget(fragmentContainer.background)
+        //fragmentContainer.background = BitmapDrawable(imageBitmap)
+        val imageBitmap = BitmapFactory.decodeFile(picturePath)
+
+        fragmentContainer.background = BitmapDrawable(imageBitmap)//ContextCompat.getDrawable(this, R.drawable.grass)
+        /*Glide.with(this)
+                .load(imageBitmap)
+                .apply(RequestOptions.centerCropTransform())
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(fragmentContainer.background)*/
+        //fragmentContainer.setBackgroundColor(Color.parseColor(color))
         //TODO Some other preferences stuff
     }
 
@@ -76,4 +100,6 @@ class MainActivity : AppCompatActivity() {
         val theme = sp.getString("pref_theme_key", Utils.THEME_LIGHT)
         Utils.changeToTheme(this, theme)
     }
+
+
 }

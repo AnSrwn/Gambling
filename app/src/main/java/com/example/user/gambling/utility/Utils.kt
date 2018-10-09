@@ -2,8 +2,14 @@ package com.example.user.gambling.utility
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
+import android.util.Base64
 import android.util.Log
 import com.example.user.gambling.R
+import java.io.ByteArrayOutputStream
+import android.graphics.BitmapFactory
+
+
 
 /**
  * Utility class.
@@ -51,6 +57,21 @@ class Utils {
                 THEME_LIGHT -> activity.setTheme(R.style.Light)
                 else -> activity.setTheme(R.style.Light)
             }
+        }
+
+        fun encodeToBase64(image: Bitmap): String {
+            val baos = ByteArrayOutputStream()
+            image.compress(Bitmap.CompressFormat.PNG, 100, baos)
+            val b = baos.toByteArray()
+            val imageEncoded = Base64.encodeToString(b, Base64.DEFAULT)
+            Log.d("Image Log:", imageEncoded)
+            return imageEncoded
+        }
+
+        fun decodeBase64(input: String): Bitmap {
+            val decodedByte = Base64.decode(input, 0)
+            return BitmapFactory
+                    .decodeByteArray(decodedByte, 0, decodedByte.size)
         }
     }
 }
