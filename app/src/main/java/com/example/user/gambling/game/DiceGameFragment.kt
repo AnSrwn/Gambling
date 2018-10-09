@@ -14,7 +14,7 @@ import com.example.user.gambling.R
 import com.example.user.gambling.database.databases.ScoreDB
 import com.example.user.gambling.database.entities.Score
 import com.example.user.gambling.game.score.DiceScore
-import com.example.user.gambling.game.score.ScoreViewModel
+import com.example.user.gambling.models.ScoreViewModel
 import kotlinx.android.synthetic.main.fragment_dice_singleplayer.*
 import org.jetbrains.anko.doAsync
 import pl.droidsonroids.gif.GifDrawable

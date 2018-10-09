@@ -10,7 +10,8 @@ import android.widget.*
 import com.example.user.gambling.R
 import com.example.user.gambling.connection.Connection
 import com.example.user.gambling.connection.PermissionHandler
-import com.example.user.gambling.game.score.ScoreViewModel
+import com.example.user.gambling.models.ScoreViewModel
+import com.example.user.gambling.models.UserNameViewModel
 import com.google.android.gms.nearby.Nearby
 import com.google.android.gms.nearby.connection.*
 import java.nio.charset.StandardCharsets.UTF_8

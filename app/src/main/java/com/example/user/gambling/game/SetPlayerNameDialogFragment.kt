@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import com.example.user.gambling.R
+import com.example.user.gambling.models.UserNameViewModel
 
 class SetPlayerNameDialogFragment : DialogFragment() {
 
