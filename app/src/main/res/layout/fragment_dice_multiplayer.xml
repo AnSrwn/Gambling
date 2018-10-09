@@ -24,9 +24,11 @@
 
     <Button
         android:id="@+id/buttonConnFindOpponent"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:drawableStart="@drawable/search_icon_small"
+        android:textSize="20sp"
         android:text="@string/dice_multi_find_opponent"
         android:elevation="2dp"/>
 

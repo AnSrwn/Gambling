@@ -44,7 +44,7 @@
     <!-- DiceSingleplayer -->
     <string name="dice_single_imageView_description">Result of the dice shake</string>
     <string name="dice_single_score">Score: %1$d</string>
-    <string name="dice_single_restart">Restart</string>
+    <string name="dice_single_restart">New Game</string>
     <string name="dice_single_extra_round">Have an extra round :)</string>
 
     <string name="dice_single_toast_start_shaking">Start shaking!</string>
