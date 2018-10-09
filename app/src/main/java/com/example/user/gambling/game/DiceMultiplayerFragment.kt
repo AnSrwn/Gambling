@@ -228,7 +228,7 @@ class DiceMultiplayerFragment : android.support.v4.app.Fragment() {
         fragmentManager!!.beginTransaction().add(
                 com.example.user.gambling.R.id.fragmentContainer,
                 diceGameFragment,
-                "gameFragment").commit()
+                "gameFragment").addToBackStack(null).commit()
 
         val multiplayerFragment = fragmentManager!!.findFragmentByTag("multiplayerFragment")
         fragmentManager!!.beginTransaction().hide(multiplayerFragment!!).commit()
