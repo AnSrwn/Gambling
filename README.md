@@ -15,12 +15,12 @@ A dice gambling app which contains the following features:
     it is only possible to connect to one other device (the API allows more connections).
   * As soon as the two devices are connected, the DiceGameFragment is opened, but in the background 
     the DiceMultiplayerFragment is still running and handling the connection.
-  * After receiving a score, DiceGameFragment is closed and DiceMultiplayerFragment is made visible, 
+  * After receiving a score, DiceGameFragment is closed and DiceMultiplayerFragment is made visible again, 
     to show the score of the opponent and the user's score.
   * Communication between the two fragments is done by <b>Live Data</b>.
 
 * Settings:
-  * The user can change the background and the the theme of the app.
+  * The user can change the background and the theme of the app.
   * Possible to choose between light and dark <b>theme</b>.
   * As the background, a color or an image can be selected. The image can be selected out of the 
     <b>gallery</b> or you can take a <b>new photo</b>.
