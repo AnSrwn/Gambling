@@ -23,4 +23,12 @@
         android:layout_weight="1"
         android:text="@string/dialog_import_from_gallery" />
 
+    <Button
+        android:id="@+id/setToDefault"
+        style="?android:attr/buttonBarButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/dialog_reset" />
+
 </LinearLayout>

@@ -40,16 +40,25 @@ class SetBackgroundImageDialogFragment : DialogFragment() {
         val view: View? = inflater.inflate(R.layout.dialog_background_image, container, false)
         val btnTakePhoto: Button = view!!.findViewById(R.id.takePhotoDialog)
         val btnImportFromGallery: Button = view.findViewById(R.id.importFromGalleryDialog)
+        val btnReset: Button = view.findViewById(R.id.setToDefault)
 
         btnTakePhoto.setOnClickListener {
             if (!isCameraAvailable()) {
                 throw IllegalArgumentException("No Camera")
             }
             dispatchTakePictureIntent()
+            //dialog.dismiss() -> Does not work TODO FIX
         }
 
         btnImportFromGallery.setOnClickListener {
             dispatchGalleryIntent()
+            //dialog.dismiss() -> Does not work TODO FIX
+        }
+
+        btnReset.setOnClickListener {
+            currentPhotoPath = Uri.parse("android.resource://com.example.user.gambling/" + R.drawable.grass).toString() //Quick and dirty
+            addImagePathToPreferene(currentPhotoPath)
+            //dialog.dismiss() -> Does not work TODO FIX
         }
 
         return view
@@ -61,6 +70,7 @@ class SetBackgroundImageDialogFragment : DialogFragment() {
     }
 
     private fun dispatchTakePictureIntent() {
+        /*
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if(takePictureIntent.resolveActivity(activity!!.packageManager) != null){
             var photoFile : File? = null
@@ -78,10 +88,9 @@ class SetBackgroundImageDialogFragment : DialogFragment() {
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
             }
-        }
+        }*/
 
-
-       /* Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+       Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             // Ensure that there's a camera activity to handle the intent
             takePictureIntent.resolveActivity(activity!!.packageManager)?.also {
                 // Create the File where the photo should go
@@ -95,14 +104,14 @@ class SetBackgroundImageDialogFragment : DialogFragment() {
                 photoFile?.also { file ->
                     val photoURI: Uri = FileProvider.getUriForFile(
                             activity!!.applicationContext,
-                            "com.example.user.gambling.camera",
+                            "com.example.user.gambling.fileprovider",
                             file
                     )
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                     startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
                 }
             }
-        }*/
+        }
     }
 
     @Throws(IOException::class)
@@ -111,7 +120,7 @@ class SetBackgroundImageDialogFragment : DialogFragment() {
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val storageDir: File = activity!!.getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!
         return File.createTempFile(
-                "JPEG_${timeStamp}_", /* prefix */
+                "JPEG_${BACKGROUND_PICTURE}_", /* prefix */
                 ".jpg", /* suffix */
                 storageDir /* directory */
         ).apply {

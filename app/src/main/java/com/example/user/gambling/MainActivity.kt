@@ -25,6 +25,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.jerem.imagebackground.DrawableViewBackgroundTarget
+import org.jetbrains.anko.backgroundDrawable
 import java.io.ByteArrayOutputStream
 import java.io.File
 
@@ -81,18 +82,14 @@ class MainActivity : AppCompatActivity() {
         val sp = PreferenceManager.getDefaultSharedPreferences(this)
         //val color = sp.getString("pref_bc_key", "white")
         val picturePath = sp.getString("imageURL", Uri.parse("android.resource://com.example.user.gambling/" + R.drawable.grass).toString())
-        //val imageBitmap = BitmapFactory.decodeFile(picturePath)
-        //val viewTarget = DrawableViewBackgroundTarget(fragmentContainer.background)
-        //fragmentContainer.background = BitmapDrawable(imageBitmap)
-        val drawable = Drawable.createFromPath(picturePath)
+        val viewTarget = DrawableViewBackgroundTarget(fragmentContainer)
         val imageBitmap = BitmapFactory.decodeFile(picturePath)
 
-        fragmentContainer.background = drawable//BitmapDrawable(applicationContext.resources, imageBitmap)//ContextCompat.getDrawable(this, R.drawable.grass)
-        /*Glide.with(this)
-                .load(imageBitmap)
+        Glide.with(this)
+                .load(picturePath)
                 .apply(RequestOptions.centerCropTransform())
                 .transition(DrawableTransitionOptions.withCrossFade())
-                .into(fragmentContainer.background)*/
+                .into(viewTarget)
         //fragmentContainer.setBackgroundColor(Color.parseColor(color))
         //TODO Some other preferences stuff
     }

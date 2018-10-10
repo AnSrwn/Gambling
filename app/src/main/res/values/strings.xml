@@ -47,6 +47,7 @@
 
     <string name="dialog_take_picture">Take photo</string>
     <string name="dialog_import_from_gallery">Choose photo from phone</string>
+    <string name="dialog_reset">Reset to default</string>
 
 
     <!-- DiceSingleplayer -->
