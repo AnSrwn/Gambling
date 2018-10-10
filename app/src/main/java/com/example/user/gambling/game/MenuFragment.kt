@@ -17,7 +17,7 @@ import com.example.user.gambling.game.score.DiceScoreListFragment
 import com.example.user.gambling.models.UserNameViewModel
 import kotlinx.android.synthetic.main.fragment_dice_menu.*
 
-class DiceMenuFragment : android.support.v4.app.Fragment() {
+class MenuFragment : android.support.v4.app.Fragment() {
 
     private var prefUsername: SharedPreferences? = null
 
@@ -56,7 +56,7 @@ class DiceMenuFragment : android.support.v4.app.Fragment() {
             val bundle = Bundle()
             bundle.putBoolean("isMultiplayer", false)
             bundle.putString("playerName", playerName.text.toString())
-            val diceSingleplayerFragment = DiceGameFragment()
+            val diceSingleplayerFragment = GameFragment()
             diceSingleplayerFragment.arguments = bundle
 
             fragmentManager!!.beginTransaction().replace(
@@ -66,7 +66,7 @@ class DiceMenuFragment : android.support.v4.app.Fragment() {
         }
 
         buttonStartMultiplayerFragment.setOnClickListener {
-            val diceMultiplayerFragment = DiceMultiplayerFragment()
+            val diceMultiplayerFragment = MultiplayerFragment()
             fragmentManager!!.beginTransaction().replace(
                     R.id.fragmentContainer,
                     diceMultiplayerFragment,

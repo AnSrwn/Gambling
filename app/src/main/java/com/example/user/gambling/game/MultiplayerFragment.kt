@@ -22,7 +22,7 @@ import java.nio.charset.StandardCharsets.UTF_8
  * background) to manage the connection.
  * After one round, the score of the user and the opponent is displayed in the multiplayerFragment.
  */
-class DiceMultiplayerFragment : android.support.v4.app.Fragment() {
+class MultiplayerFragment : android.support.v4.app.Fragment() {
 
     private var connection: Connection? = null
     private var username = "defaultName"
@@ -259,7 +259,7 @@ class DiceMultiplayerFragment : android.support.v4.app.Fragment() {
      * Hides the active multiplayerFragment, so that it still runs in the background.
      */
     private fun startGameFragment() {
-        val diceGameFragment = DiceGameFragment()
+        val diceGameFragment = GameFragment()
 
         val bundle = Bundle()
         bundle.putBoolean("isMultiplayer", true)

@@ -25,7 +25,7 @@ import android.widget.Toast
  * This fragment contains the main dice game. It is used for the Singleplayer and the Multiplayer.
  * To differentiate the two cases, the isMultiplayer variable is used.
  */
-class DiceGameFragment : android.support.v4.app.Fragment() {
+class GameFragment : android.support.v4.app.Fragment() {
 
     companion object {
         private const val MAX_DATABASE_ENTRIES = 10

@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.preference.PreferenceManager
 import android.view.Menu
-import com.example.user.gambling.game.DiceMenuFragment
+import com.example.user.gambling.game.MenuFragment
 import android.view.MenuItem
 import com.example.user.gambling.settings.SettingsActivity
 import com.example.user.gambling.utility.Utils
@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         internal val DEFAULT_DRAWABLE_URI = "android.resource://com.example.user.gambling/$DEFAULT_DRAWABLE"
     }
 
-    private val diceMenuFragment = DiceMenuFragment()
+    private val diceMenuFragment = MenuFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
