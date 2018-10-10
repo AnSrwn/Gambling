@@ -11,13 +11,18 @@ import android.view.MenuItem
 import com.example.user.gambling.settings.SettingsActivity
 import com.example.user.gambling.utility.Utils
 import kotlinx.android.synthetic.main.activity_main.*
-import android.net.Uri
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.jerem.imagebackground.DrawableViewBackgroundTarget
 
 class MainActivity : AppCompatActivity() {
+
+    companion object {
+        internal const val BACKGROUND_IMAGE_URI_KEY = "backgroundImageURI"
+        private const val DEFAULT_DRAWABLE = R.drawable.grass
+        internal val DEFAULT_DRAWABLE_URI = "android.resource://com.example.user.gambling/$DEFAULT_DRAWABLE"
+    }
 
     private val diceMenuFragment = DiceMenuFragment()
 
@@ -72,7 +77,7 @@ class MainActivity : AppCompatActivity() {
     private fun loadPreferences(){
         val sp = PreferenceManager.getDefaultSharedPreferences(this)
         //val color = sp.getString("pref_bc_key", "white")
-        val picturePath = sp.getString("imageURL", Uri.parse("android.resource://com.example.user.gambling/" + R.drawable.grass).toString())
+        val picturePath = sp.getString(BACKGROUND_IMAGE_URI_KEY, DEFAULT_DRAWABLE_URI)
         val viewTarget = DrawableViewBackgroundTarget(fragmentContainer)
 
         Glide.with(this)

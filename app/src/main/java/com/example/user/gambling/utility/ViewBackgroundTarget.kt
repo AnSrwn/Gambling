@@ -6,7 +6,7 @@ import android.graphics.drawable.Drawable
 import com.bumptech.glide.request.transition.Transition
 
 /**
- *
+ * A view background target to set a generic resource as background.
  */
 abstract class ViewBackgroundTarget<Z>(view: View) : ViewTarget<View, Z>(view){
 
@@ -26,6 +26,7 @@ abstract class ViewBackgroundTarget<Z>(view: View) : ViewTarget<View, Z>(view){
     protected fun setBackground(drawable: Drawable) {
             view.background = drawable
     }
+
     protected abstract fun setResource(resource: Z)
 
 }

@@ -17,24 +17,30 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import com.example.user.gambling.MainActivity.Companion.BACKGROUND_IMAGE_URI_KEY
+import com.example.user.gambling.MainActivity.Companion.DEFAULT_DRAWABLE_URI
 import com.example.user.gambling.R
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.lang.IllegalArgumentException
 import java.lang.NullPointerException
-import java.text.SimpleDateFormat
-import java.util.*
 
+/**
+ * DialogFragment for setting background image. Choosing either from camera, gallery or reset to default.
+ */
 class SetBackgroundImageDialogFragment : DialogFragment() {
 
     companion object {
-        private const val REQUEST_TAKE_PHOTO = 1
-        private const val REQUEST_PICK_PHOTO = 2
+        internal const val REQUEST_TAKE_PHOTO = 1
+        internal const val REQUEST_PICK_PHOTO = 2
+
+        /** Variable for the background pictures name. */
         private const val BACKGROUND_PICTURE = "background_pic"
     }
 
-    private var currentPhotoPath : String = ""
+    /** For the intents photo result. */
+    private var currentPhotoURI : String = ""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View? = inflater.inflate(R.layout.dialog_background_image, container, false)
@@ -56,8 +62,8 @@ class SetBackgroundImageDialogFragment : DialogFragment() {
         }
 
         btnReset.setOnClickListener {
-            currentPhotoPath = Uri.parse("android.resource://com.example.user.gambling/" + R.drawable.grass).toString() //Quick and dirty
-            addImagePathToPreferene(currentPhotoPath)
+            currentPhotoURI = DEFAULT_DRAWABLE_URI //Quick and dirty
+            addBackgroundImagePathToPreferene(currentPhotoURI)
             //dialog.dismiss() -> Does not work TODO FIX
         }
 
@@ -69,27 +75,10 @@ class SetBackgroundImageDialogFragment : DialogFragment() {
         return pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)
     }
 
+    /**
+     * Starting taking picture intent and saving the captured image in a temporary file.
+     */
     private fun dispatchTakePictureIntent() {
-        /*
-        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        if(takePictureIntent.resolveActivity(activity!!.packageManager) != null){
-            var photoFile : File? = null
-            try{
-                photoFile = createImageFile()
-            }catch (e : IOException){
-                // Error
-            }
-            if(photoFile != null){
-                val activityContext = activity!!.applicationContext
-                val photoURI = FileProvider.getUriForFile(
-                        activityContext,
-                        "com.example.user.gambling.fileprovider",
-                        photoFile)
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
-            }
-        }*/
-
        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             // Ensure that there's a camera activity to handle the intent
             takePictureIntent.resolveActivity(activity!!.packageManager)?.also {
@@ -114,10 +103,14 @@ class SetBackgroundImageDialogFragment : DialogFragment() {
         }
     }
 
+
+    /**
+     * Create or replace the background picture in app storage in the directory specified in xml/file_paths.xml
+     * @return File object at currentPhotoURI
+     */
     @Throws(IOException::class)
     private fun createImageFile(): File {
         // Create an image file name
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val storageDir: File = activity!!.getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!
         return File.createTempFile(
                 "JPEG_${BACKGROUND_PICTURE}_", /* prefix */
@@ -125,10 +118,14 @@ class SetBackgroundImageDialogFragment : DialogFragment() {
                 storageDir /* directory */
         ).apply {
             // Save a file: path for use with ACTION_VIEW intents
-            currentPhotoPath = absolutePath
+            currentPhotoURI = absolutePath
         }
     }
 
+    /**
+     * Save selected image path in shared preferences. If data is null throw Exception.
+     * @param data selected image. If null throws NullpointerException.
+     */
     private fun handleGalleryIntent(data: Intent?) {
         if (data == null) {
             // something is wrong
@@ -138,16 +135,23 @@ class SetBackgroundImageDialogFragment : DialogFragment() {
         // handle single photo
         val uri = data.data
         importPhoto(activity!!.applicationContext, uri)
-        addImagePathToPreferene(currentPhotoPath)
+        addBackgroundImagePathToPreferene(currentPhotoURI)
     }
 
+    /**
+     * Handle camera intent after picture was taken and saved to applications local storage.
+     */
     private fun handleCameraIntent() {
-        addImagePathToPreferene(currentPhotoPath)
+        addBackgroundImagePathToPreferene(currentPhotoURI)
     }
 
-    private fun addImagePathToPreferene(url : String){
+    /**
+     * Add background image uri in the local application storage to shared preference with key imageURL.
+     * @param uri of the background image in the local storage.
+     */
+    private fun addBackgroundImagePathToPreferene(uri : String){
         val sp : SharedPreferences.Editor  = PreferenceManager.getDefaultSharedPreferences(activity!!.applicationContext).edit()
-        sp.putString("imageURL", url)
+        sp.putString(BACKGROUND_IMAGE_URI_KEY, uri)
         sp.apply()
     }
 
@@ -161,6 +165,9 @@ class SetBackgroundImageDialogFragment : DialogFragment() {
         }
     }
 
+    /**
+     * Handle gallery intent for selecting only image-Files
+     */
     private fun dispatchGalleryIntent() {
         val intent = Intent()
         intent.type = "image/*"
@@ -168,6 +175,10 @@ class SetBackgroundImageDialogFragment : DialogFragment() {
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), REQUEST_PICK_PHOTO)
     }
 
+    /**
+     * Import image from gallery at the given uri into the applications context.
+     */
+    @Throws(IOException::class)
     private fun importPhoto(context: Context, uri: Uri): Boolean {
         if (!isImage(context, uri)) {
             // not image
@@ -177,7 +188,7 @@ class SetBackgroundImageDialogFragment : DialogFragment() {
         return try {
             val photoFile = createImageFile()
             copyUriToFile(context, uri, photoFile)
-            // addImageToGallery(photoFile)
+            // addImageToGallery(photoFile) -> application gallery
             true
         } catch (e: IOException) {
             e.printStackTrace()
@@ -186,11 +197,22 @@ class SetBackgroundImageDialogFragment : DialogFragment() {
         }
     }
 
+    /**
+     * Checks whether a file at the fiven uri is an image.
+     * @param context of the activity
+     * @param uri of the image
+     */
     private fun isImage(context: Context, uri: Uri): Boolean {
         val mimeType = context.contentResolver.getType(uri) ?: return true
         return mimeType.startsWith("image/")
     }
 
+    /**
+     * Copy selected image at uri to the applications local storage.
+     * @param context of the activity
+     * @param uri of the image
+     * @param outputFile to write the image file from the uri
+     */
     private fun copyUriToFile(context: Context, uri: Uri, outputFile: File) {
         val inputStream = context.contentResolver.openInputStream(uri)
 
