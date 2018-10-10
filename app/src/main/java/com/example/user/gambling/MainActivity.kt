@@ -12,10 +12,11 @@ import android.view.MenuItem
 import com.example.user.gambling.settings.SettingsActivity
 import com.example.user.gambling.utility.Utils
 import kotlinx.android.synthetic.main.activity_main.*
-<<<<<<< HEAD
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Environment
 import android.support.v4.content.ContextCompat
 import android.util.Base64
@@ -26,9 +27,6 @@ import com.bumptech.glide.request.RequestOptions
 import com.jerem.imagebackground.DrawableViewBackgroundTarget
 import java.io.ByteArrayOutputStream
 import java.io.File
-
-=======
->>>>>>> d81f2819af552ec681a2f0325f0aaeee3088e1ef
 
 class MainActivity : AppCompatActivity() {
 
@@ -81,15 +79,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadPreferences(){
         val sp = PreferenceManager.getDefaultSharedPreferences(this)
-<<<<<<< HEAD
         //val color = sp.getString("pref_bc_key", "white")
-        val picturePath = sp.getString("imageURL", "grass.png")
+        val picturePath = sp.getString("imageURL", Uri.parse("android.resource://com.example.user.gambling/" + R.drawable.grass).toString())
         //val imageBitmap = BitmapFactory.decodeFile(picturePath)
         //val viewTarget = DrawableViewBackgroundTarget(fragmentContainer.background)
         //fragmentContainer.background = BitmapDrawable(imageBitmap)
+        val drawable = Drawable.createFromPath(picturePath)
         val imageBitmap = BitmapFactory.decodeFile(picturePath)
 
-        fragmentContainer.background = BitmapDrawable(imageBitmap)//ContextCompat.getDrawable(this, R.drawable.grass)
+        fragmentContainer.background = drawable//BitmapDrawable(applicationContext.resources, imageBitmap)//ContextCompat.getDrawable(this, R.drawable.grass)
         /*Glide.with(this)
                 .load(imageBitmap)
                 .apply(RequestOptions.centerCropTransform())
@@ -97,10 +95,6 @@ class MainActivity : AppCompatActivity() {
                 .into(fragmentContainer.background)*/
         //fragmentContainer.setBackgroundColor(Color.parseColor(color))
         //TODO Some other preferences stuff
-=======
-        val color = sp.getString("pref_bc_key", "white")
-        fragmentContainer.setBackgroundColor(Color.parseColor(color))
->>>>>>> d81f2819af552ec681a2f0325f0aaeee3088e1ef
     }
 
     private fun reloadTheme(){

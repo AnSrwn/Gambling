@@ -8,7 +8,7 @@ import android.util.Log
 import com.example.user.gambling.R
 import java.io.ByteArrayOutputStream
 import android.graphics.BitmapFactory
-
+import android.net.Uri
 
 
 /**
@@ -57,6 +57,10 @@ class Utils {
                 THEME_LIGHT -> activity.setTheme(R.style.Light)
                 else -> activity.setTheme(R.style.Light)
             }
+        }
+
+        fun getURLForResource(resourceId: Int): String {
+            return Uri.parse("android.resource://" + android.R::class.java.getPackage().name + "/" + resourceId).toString()
         }
 
         fun encodeToBase64(image: Bitmap): String {
