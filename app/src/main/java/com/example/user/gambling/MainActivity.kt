@@ -2,7 +2,6 @@ package com.example.user.gambling
 
 import android.content.Intent
 import android.content.pm.ActivityInfo
-import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.preference.PreferenceManager
@@ -12,22 +11,11 @@ import android.view.MenuItem
 import com.example.user.gambling.settings.SettingsActivity
 import com.example.user.gambling.utility.Utils
 import kotlinx.android.synthetic.main.activity_main.*
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import android.net.Uri
-import android.os.Environment
-import android.support.v4.content.ContextCompat
-import android.util.Base64
-import android.util.Log
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.jerem.imagebackground.DrawableViewBackgroundTarget
-import org.jetbrains.anko.backgroundDrawable
-import java.io.ByteArrayOutputStream
-import java.io.File
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,10 +23,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Utils.onActivityCreateSetTheme(this)
+        Utils.onActivityCreateSetTheme(this) // Load current theme set in Utils
         setContentView(R.layout.activity_main)
 
-        this.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        this.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT //TODO Landscape for tablets, but currently not needed
 
         supportFragmentManager.beginTransaction().add(R.id.fragmentContainer, diceMenuFragment).commit()
     }
@@ -78,22 +66,28 @@ class MainActivity : AppCompatActivity() {
         loadPreferences()
     }
 
+    /**
+     * Load other shared preferences than theme.
+     */
     private fun loadPreferences(){
         val sp = PreferenceManager.getDefaultSharedPreferences(this)
         //val color = sp.getString("pref_bc_key", "white")
         val picturePath = sp.getString("imageURL", Uri.parse("android.resource://com.example.user.gambling/" + R.drawable.grass).toString())
         val viewTarget = DrawableViewBackgroundTarget(fragmentContainer)
-        val imageBitmap = BitmapFactory.decodeFile(picturePath)
 
         Glide.with(this)
                 .load(picturePath)
                 .apply(RequestOptions.centerCropTransform())
                 .transition(DrawableTransitionOptions.withCrossFade())
-                .into(viewTarget)
+                .into(viewTarget) //TODO Extract and add transparency
+
         //fragmentContainer.setBackgroundColor(Color.parseColor(color))
         //TODO Some other preferences stuff
     }
 
+    /**
+     * Set old theme to the new one from shared preferences, then restart app.
+     */
     private fun reloadTheme(){
         val sp = PreferenceManager.getDefaultSharedPreferences(this)
         val theme = sp.getString("pref_theme_key", Utils.THEME_LIGHT)

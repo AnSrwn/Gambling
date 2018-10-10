@@ -5,7 +5,9 @@ import com.bumptech.glide.request.target.ViewTarget
 import android.graphics.drawable.Drawable
 import com.bumptech.glide.request.transition.Transition
 
-
+/**
+ *
+ */
 abstract class ViewBackgroundTarget<Z>(view: View) : ViewTarget<View, Z>(view){
 
 

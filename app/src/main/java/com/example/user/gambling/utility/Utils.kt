@@ -58,24 +58,5 @@ class Utils {
                 else -> activity.setTheme(R.style.Light)
             }
         }
-
-        fun getURLForResource(resourceId: Int): String {
-            return Uri.parse("android.resource://" + android.R::class.java.getPackage().name + "/" + resourceId).toString()
-        }
-
-        fun encodeToBase64(image: Bitmap): String {
-            val baos = ByteArrayOutputStream()
-            image.compress(Bitmap.CompressFormat.PNG, 100, baos)
-            val b = baos.toByteArray()
-            val imageEncoded = Base64.encodeToString(b, Base64.DEFAULT)
-            Log.d("Image Log:", imageEncoded)
-            return imageEncoded
-        }
-
-        fun decodeBase64(input: String): Bitmap {
-            val decodedByte = Base64.decode(input, 0)
-            return BitmapFactory
-                    .decodeByteArray(decodedByte, 0, decodedByte.size)
-        }
     }
 }
