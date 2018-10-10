@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         internal const val BACKGROUND_IMAGE_URI_KEY = "backgroundImageURI"
-        private const val DEFAULT_DRAWABLE = R.drawable.grass
+        private const val DEFAULT_DRAWABLE = R.drawable.wood
         internal val DEFAULT_DRAWABLE_URI = "android.resource://com.example.user.gambling/$DEFAULT_DRAWABLE"
     }
 
