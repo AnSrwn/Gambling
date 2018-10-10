@@ -27,7 +27,7 @@ Features:
 * Settings:
   * The user can change the background and the theme of the app.
   * Possible to choose between light and dark <b>theme</b>.
-  * As the background, a color or an image can be selected. The image can be selected out of the 
+  * As the background, an image can be selected. The image can be selected out of the 
     <b>gallery</b> or you can take a <b>new photo</b>.
   * The selected settings are stored in <b>shared preferences</b>.
   
