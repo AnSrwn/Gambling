@@ -81,6 +81,9 @@ class MenuFragment : android.support.v4.app.Fragment() {
         return view
     }
 
+    /**
+     * Method to update the username textView if the username is changed.
+     */
     private fun registerForPlayerNameUpdates() {
         activity?.let { fragmentActivity ->
             val sharedViewModel = ViewModelProviders.of(fragmentActivity).get(UserNameViewModel::class.java)
