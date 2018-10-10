@@ -15,7 +15,7 @@ class DiceScoreListViewAdapter(context: Context, private val scores: List<Score>
             = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val rowView = inflater.inflate(R.layout.item_dice_score, parent, false)
+        val rowView = inflater.inflate(R.layout.item_dice_score, parent, false) //TODO View Holder pattern
         val thisScore = scores!![position]
         var tv = rowView.findViewById(R.id.playersNames) as TextView
         tv.text = thisScore.playerName
