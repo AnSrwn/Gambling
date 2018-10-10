@@ -1,4 +1,4 @@
-package com.example.user.gambling.game.score
+package com.example.user.gambling.models
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel

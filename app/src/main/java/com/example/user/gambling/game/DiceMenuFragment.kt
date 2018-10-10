@@ -14,6 +14,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import com.example.user.gambling.R
 import com.example.user.gambling.game.score.DiceScoreListFragment
+import com.example.user.gambling.models.UserNameViewModel
 import kotlinx.android.synthetic.main.fragment_dice_menu.*
 
 class DiceMenuFragment : android.support.v4.app.Fragment() {

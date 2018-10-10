@@ -12,6 +12,7 @@ import android.view.MenuItem
 import com.example.user.gambling.settings.SettingsActivity
 import com.example.user.gambling.utility.Utils
 import kotlinx.android.synthetic.main.activity_main.*
+<<<<<<< HEAD
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
@@ -26,6 +27,8 @@ import com.jerem.imagebackground.DrawableViewBackgroundTarget
 import java.io.ByteArrayOutputStream
 import java.io.File
 
+=======
+>>>>>>> d81f2819af552ec681a2f0325f0aaeee3088e1ef
 
 class MainActivity : AppCompatActivity() {
 
@@ -78,6 +81,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadPreferences(){
         val sp = PreferenceManager.getDefaultSharedPreferences(this)
+<<<<<<< HEAD
         //val color = sp.getString("pref_bc_key", "white")
         val picturePath = sp.getString("imageURL", "grass.png")
         //val imageBitmap = BitmapFactory.decodeFile(picturePath)
@@ -93,6 +97,10 @@ class MainActivity : AppCompatActivity() {
                 .into(fragmentContainer.background)*/
         //fragmentContainer.setBackgroundColor(Color.parseColor(color))
         //TODO Some other preferences stuff
+=======
+        val color = sp.getString("pref_bc_key", "white")
+        fragmentContainer.setBackgroundColor(Color.parseColor(color))
+>>>>>>> d81f2819af552ec681a2f0325f0aaeee3088e1ef
     }
 
     private fun reloadTheme(){

@@ -15,6 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_marginStart="2dp"
             android:gravity="center"
             android:textSize="20sp"
             android:text="@string/dice_score_list_username" />
@@ -23,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="4dp"
             android:gravity="center"
             android:textSize="20sp"
             android:text="@string/dice_score_list_score" />
