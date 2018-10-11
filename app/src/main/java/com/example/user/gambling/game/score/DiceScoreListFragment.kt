@@ -9,6 +9,7 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.support.v4.app.Fragment
 import android.widget.ListView
+import com.example.user.gambling.models.DBScoreViewModel
 
 
 class DiceScoreListFragment : Fragment(){

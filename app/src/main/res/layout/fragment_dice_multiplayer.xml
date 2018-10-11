@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".game.DiceMultiplayerFragment">
+    tools:context=".game.MultiplayerFragment">
 
     <FrameLayout
         android:id="@+id/waitForOpponentLoadingPanel"
@@ -17,6 +17,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="20sp"
             android:text="@string/dice_multi_waiting"
             android:indeterminate="true"
             android:layout_gravity="center"/>
@@ -24,9 +25,11 @@
 
     <Button
         android:id="@+id/buttonConnFindOpponent"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:drawableStart="@drawable/search_icon_small"
+        android:textSize="20sp"
         android:text="@string/dice_multi_find_opponent"
         android:elevation="2dp"/>
 
@@ -54,9 +57,11 @@
 
     <Button
         android:id="@+id/buttonContinueMultiGame"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:drawableStart="@drawable/restart_icon_small"
+        android:textSize="20sp"
         android:text="@string/dice_multi_continue_game"
         android:elevation="2dp"/>
 </FrameLayout>

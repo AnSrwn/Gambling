@@ -2,8 +2,14 @@ package com.example.user.gambling.utility
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
+import android.util.Base64
 import android.util.Log
 import com.example.user.gambling.R
+import java.io.ByteArrayOutputStream
+import android.graphics.BitmapFactory
+import android.net.Uri
+
 
 /**
  * Utility class.

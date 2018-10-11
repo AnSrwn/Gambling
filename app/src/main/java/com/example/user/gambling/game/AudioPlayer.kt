@@ -4,7 +4,9 @@ import android.content.Context
 import android.media.MediaPlayer
 import com.example.user.gambling.R
 
-
+/**
+ * This class provides methods to play sounds for the dice game.
+ */
 class AudioPlayer(val context: Context) {
     private lateinit var mp: MediaPlayer
 

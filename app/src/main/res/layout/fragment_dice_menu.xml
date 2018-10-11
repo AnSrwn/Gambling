@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".game.DiceMenuFragment">
+    android:orientation="vertical"
+    tools:context=".game.MenuFragment">
 
     <LinearLayout
         android:id="@+id/playerInformation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="34dp"
         android:layout_marginEnd="8dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,56 +26,57 @@
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:gravity="end"
-            android:textSize="30sp"/>
+            android:textSize="30sp" />
 
         <ImageButton
             android:id="@+id/buttonChangePlayersName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:gravity="start"
             android:layout_marginEnd="20dp"
+            android:layout_weight="2"
             android:background="@android:color/transparent"
-            android:src="@android:drawable/ic_menu_edit"
             android:contentDescription="@string/dice_menu_description_edit_username"
+            android:gravity="start"
+            android:src="@android:drawable/ic_menu_edit"
             android:text="@string/dice_menu_change_player_name" />
+
     </LinearLayout>
 
-    <Button
-        android:id="@+id/buttonStartSingleplayerFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="148dp"
-        android:layout_marginStart="148dp"
-        android:layout_marginTop="111dp"
-        android:text="@string/dice_menu_roll_the_dice"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/playerInformation" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/buttonStartMultiplayerFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="149dp"
-        android:layout_marginStart="147dp"
-        android:layout_marginTop="84dp"
-        android:text="@string/dice_menu_multiplayer"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonStartSingleplayerFragment" />
+        <Button
+            android:id="@+id/buttonStartSingleplayerFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/singleplayer_icon_dices_small"
+            android:text="@string/dice_menu_roll_the_dice"
+            android:textSize="20sp"/>
 
-    <Button
-        android:id="@+id/buttonShowScore"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="149dp"
-        android:layout_marginStart="147dp"
-        android:layout_marginTop="84dp"
-        android:text="@string/dice_menu_show_score"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonStartMultiplayerFragment" />
+        <Button
+            android:id="@+id/buttonStartMultiplayerFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/multiplayer_icon_small"
+            android:text="@string/dice_menu_multiplayer"
+            android:textSize="20sp"/>
+
+        <Button
+            android:id="@+id/buttonShowScore"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/score_icon_small"
+            android:text="@string/dice_menu_show_score"
+            android:textSize="20sp"/>
+
+    </LinearLayout>
 
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

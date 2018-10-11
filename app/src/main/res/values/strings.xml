@@ -14,7 +14,7 @@
     <!-- DiceMenu -->
     <string name="dice_menu_roll_the_dice">Roll the dice!</string>
     <string name="dice_menu_multiplayer">Multiplayer</string>
-    <string name="dice_menu_show_score">Show Score</string>
+    <string name="dice_menu_show_score">Score</string>
     <string name="dice_menu_player_name">Name Placeholder</string>
     <string name="dice_menu_change_player_name">Change Name</string>
 
@@ -41,10 +41,19 @@
     <string name="pref_theme_key">themeList</string>
     <string name="pref_theme_text">Theme</string>
 
+    <!-- Background Image -->
+    <string name="pref_bc_pic_text">Background Image</string>
+    <string name="pref_bc_pic_description">Take a picture or use a photo from the gallery as background!</string>
+
+    <string name="dialog_take_picture">Take photo</string>
+    <string name="dialog_import_from_gallery">Choose photo from phone</string>
+    <string name="dialog_reset">Reset to default</string>
+
+
     <!-- DiceSingleplayer -->
     <string name="dice_single_imageView_description">Result of the dice shake</string>
     <string name="dice_single_score">Score: %1$d</string>
-    <string name="dice_single_restart">Restart</string>
+    <string name="dice_single_restart">New Game</string>
     <string name="dice_single_extra_round">Have an extra round :)</string>
 
     <string name="dice_single_toast_start_shaking">Start shaking!</string>

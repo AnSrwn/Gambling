@@ -14,14 +14,18 @@ import com.example.user.gambling.R
 import com.example.user.gambling.database.databases.ScoreDB
 import com.example.user.gambling.database.entities.Score
 import com.example.user.gambling.game.score.DiceScore
-import com.example.user.gambling.game.score.ScoreViewModel
+import com.example.user.gambling.models.ScoreViewModel
 import kotlinx.android.synthetic.main.fragment_dice_singleplayer.*
 import org.jetbrains.anko.doAsync
 import pl.droidsonroids.gif.GifDrawable
 import pl.droidsonroids.gif.GifImageView
 import android.widget.Toast
 
-class DiceGameFragment : android.support.v4.app.Fragment() {
+/**
+ * This fragment contains the main dice game. It is used for the Singleplayer and the Multiplayer.
+ * To differentiate the two cases, the isMultiplayer variable is used.
+ */
+class GameFragment : android.support.v4.app.Fragment() {
 
     companion object {
         private const val MAX_DATABASE_ENTRIES = 10
@@ -59,8 +63,6 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
         }
         btnRestart!!.visibility = View.GONE
 
-
-
         shakeListener = ShakeListener(activity!!.applicationContext)
         startGifAnimations()
 
@@ -77,6 +79,13 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
         super.onPause()
     }
 
+    /**
+     * Method to start the shaking GIF animations and to start the ShakeListener
+     * It should be called after the setCup GIF started, so that after 400ms the dices become
+     * invisible and only the cup is shown.
+     * After 800ms the ShakeLister is started and the user is informed, that now shakes are
+     * detected.
+     */
     private fun startGifAnimations() {
         Handler().postDelayed({
             setDicesVisibilty(false)
@@ -92,6 +101,21 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
         }, 800)
     }
 
+    /**
+     * This method starts the ShakeListener and defines what to do when the device is shaken or the
+     * the shake stopped.
+     *
+     * While shaking the shaking GIF and a corresponding sound is played.
+     * OnShakeStop the shaking GIF is stopped and the setCup GIF with corresponding sound is played.
+     *
+     * After that, it is checked if the game belongs to a Multiplayer game. If yes, the user returns
+     * to the Multiplayer fragment and the score is transferred by using Live Data.
+     * If it is a Singleplayer game, it is checked if the scores are a double. If yes, the user can
+     * play another round, otherwise the score is displayed and depending on the score, it is saved
+     * in the High Score.
+     *
+     * Every time the ShakeListener is paused.
+     */
     private fun startShakeListener() {
         val audioPlayer = AudioPlayer(context!!)
 
@@ -185,6 +209,9 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
         })
     }
 
+    /**
+     * Method to find all needed views and starts the setCup GIF animation.
+     */
     private fun setImageResources(view: View) {
         imageViewDice1 = view.findViewById<View>(R.id.imageViewFirstDice) as ImageView
         imageViewDice1!!.setImageResource(R.drawable.dice1)
@@ -197,6 +224,10 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
         gifDrawable = gifImageViewDiceCup!!.drawable as GifDrawable
     }
 
+    /**
+     * Method to remove the gameFragment from the stack and making the multiplayerFragment
+     * visible again.
+     */
     private fun returnToMultiplayerFragment() {
         val gameFragment = fragmentManager!!.findFragmentByTag("gameFragment")
         fragmentManager!!.beginTransaction().remove(gameFragment!!).commit()
@@ -205,6 +236,10 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
         fragmentManager!!.beginTransaction().show(multiplayerFragment!!).commit()
     }
 
+    /**
+     * Restarts the gameFragment. Should be called after a Singleplayer game by pressing the
+     * "New Game" button.
+     */
     private fun restartGameFragment() {
         val diceSingleplayerFragment = fragmentManager!!.findFragmentByTag("singleplayerFragment")
 
@@ -214,6 +249,11 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
                 .commit()
     }
 
+    /**
+     * Sets the visibility of the dice images.
+     * Is needed during the different cup GIF animations.
+     * @param setVisible true to make dices visible and false to make them gone.
+     */
     private fun setDicesVisibilty(setVisible: Boolean) {
         if(setVisible) {
             imageViewDice1!!.visibility = View.VISIBLE
@@ -225,6 +265,12 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
         }
     }
 
+    /**
+     * Sets the imageView of the dices, depending on the score.
+     * For each score (1-6) there is a specific drawable.
+     * @param view imageView of the dice
+     * @param score between 1 and 6
+     */
     private fun changeDice(view: ImageView?, score: Int) {
         when (score) {
             1 -> view!!.setImageResource(R.drawable.dice1)
@@ -260,6 +306,10 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
         }
     }
 
+    /**
+     * Is needed in the Singleplayer mode, if the user got a double and can play another round.
+     * This method gets the score of the previous round(s).
+     */
     private fun registerForScoreUpdates() {
         activity?.let { fragmentActivity ->
             val sharedViewModel = ViewModelProviders.of(fragmentActivity).get(ScoreViewModel::class.java)
@@ -271,6 +321,12 @@ class DiceGameFragment : android.support.v4.app.Fragment() {
         }
     }
 
+    /**
+     * Saves the score in a Live Data model.
+     * In Singleplayer mode: If user gets a double, the score is saved, before restarting the
+     * gameFragment.
+     * In Multiplayer mode: Score is saved, so that the multiplayerFragment can get it.
+     */
     private fun updateDiceScore(score: Int) {
         activity?.let {
             val scoreViewModel = ViewModelProviders.of(it).get(ScoreViewModel::class.java)

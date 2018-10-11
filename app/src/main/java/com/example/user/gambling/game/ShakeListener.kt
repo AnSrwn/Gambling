@@ -6,6 +6,12 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 
+/**
+ * This class is used to detect if the device is being shacked or not.
+ * You can override the functions in the interface OnShakeListener to specify what to do in the
+ * specific situations.
+ * You can change the sensitivity of the ShakeListener by changing shakeThreshold.
+ */
 class ShakeListener(context: Context) : SensorEventListener {
 
     private val shakeThreshold = 800 //defines how strong the shake must be, to be detected
@@ -21,6 +27,10 @@ class ShakeListener(context: Context) : SensorEventListener {
     private var lastShake = 0L
 
 
+    /**
+     * Override the following functions to specify what should happen if the device is being
+     * shaken (onShake), when the shake stopped (onShakeStop) and when the ShakeLister resume.
+     */
     interface OnShakeListener {
         fun onShake()
         fun onShakeStop()
@@ -47,6 +57,12 @@ class ShakeListener(context: Context) : SensorEventListener {
     override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
     }
 
+    /**
+     * This method gets the recent x, y and z values and calculates the speed of the moving device.
+     * Depending on the speed it is estimated if the device is shaken or if the the shake stopped,
+     * and the related function is called.
+     * @param event provides the recent x, y and z values, every time they changed.
+     */
     override fun onSensorChanged(event: SensorEvent?) {
         if (event != null) {
             val mySensor = event.sensor
